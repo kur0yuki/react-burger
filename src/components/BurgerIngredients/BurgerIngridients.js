@@ -1,53 +1,30 @@
 import React from 'react';
-import {Tab, Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import './BurgerIngridients.css'
+import IngredientCard from "../IngredientCard/IngredientCard";
 
 class BurgerIngridients extends React.Component {
     render() {
-        return <div className='BurgerIngridients'>
-            <h2 className='section-title'>Соберите бургер</h2>
-            <div className="tabs">
-                <Tab active={true} value={0} onClick={0}>Булки</Tab>
-                <Tab active={false} value={0} onClick={0}>Булки</Tab>
-                <Tab active={false} value={0} onClick={0}>Булки</Tab>
+        return <div className='BurgerIngridients pt-10'>
+            <h2 className='section-title text text_type_main-large'>Соберите бургер</h2>
+            <div className="tabs mb-10 mt-5">
+                <Tab active={true} value={0} onClick={0}><p className='text text_type_main-default'>Булки</p></Tab>
+                <Tab active={false} value={0} onClick={0}><p className='text text_type_main-default'>Соусы</p></Tab>
+                <Tab active={false} value={0} onClick={0}><p className='text text_type_main-default'>Котлетки</p></Tab>
             </div>
             <div className='ingridientsWindow'>
-                <h2 className="type">Булки</h2>
-                {this.props.data.filter(thing => thing.type==="bun").map(bun=>{
-                    return <article className="article" key={bun.id}>
-                        <img src={bun.image} alt="булочка" className="md-8"/>
-                        <div className="price mb-1">
-                            <p className='text text_type_digits-default'>{bun.price}</p>
-                            <CurrencyIcon type="primary" />
-                        </div>
-                        <p className="text">{bun.name}</p>
-                        <Counter count={1} size="default" />
-                    </article>
-                })}
-                <h2 className="type">Соусы</h2>
-                {this.props.data.filter(thing => thing.type==="sauce").map(bun=>{
-                    return <article className="article" key={bun.id}>
-                        <img src={bun.image} alt="булочка" className="md-8"/>
-                        <div className="price mb-1">
-                            <p className='text text_type_digits-default'>{bun.price}</p>
-                            <CurrencyIcon type="primary" />
-                        </div>
-                        <p className="text">{bun.name}</p>
-
-                    </article>
-                })}
-                <h2 className="type">Котлетка</h2>
-                {this.props.data.filter(thing => thing.type==="main").map(bun=>{
-                    return <article className="article" key={bun.id}>
-                        <img src={bun.image} alt="булочка" className="md-8"/>
-                        <div className="price  mb-1">
-                            <p className='text text_type_digits-default'>{bun.price}</p>
-                            <CurrencyIcon type="primary" />
-                        </div>
-                        <p className="text">{bun.name}</p>
-
-                    </article>
-                })}
+                <h2 className="type mb-6 text text_type_main-medium">Булки</h2>
+                {this.props.data.filter(thing => thing.type==="bun").map(bun=>
+                    <IngredientCard {...bun} />
+                )}
+                <h2 className="type mb-6 text text_type_main-medium">Соусы</h2>
+                {this.props.data.filter(thing => thing.type==="sauce").map(bun=>
+                    <IngredientCard {...bun} />)
+                }
+                <h2 className="type mb-6 text text_type_main-medium">Котлетка</h2>
+                {this.props.data.filter(thing => thing.type==="main").map(bun=>
+                    <IngredientCard {...bun} />)
+                }
             </div>
         </div>
     }
