@@ -1,0 +1,27 @@
+.row{
+    display: flex;
+    flex-direction: row;
+}
+
+.AppHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #1C1C21;
+    position: relative;
+    grid-column: span 2;
+    padding-left: calc((100% - 1280px)/2);
+    padding-right: calc((100% - 1280px)/2);
+}
+
+.link {
+    text-decoration: none;
+    color: aliceblue;
+
+}
+
+.logo {
+    position: absolute;
+    left: calc((100% - 290px)/ 2);
+}
+
