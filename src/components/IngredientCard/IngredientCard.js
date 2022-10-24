@@ -1,14 +1,15 @@
 import React from 'react';
-import './IngredientCard.css'
+import styles from './IngredientCard.module.css'
+import appStyles from '../../App.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 
 class IngredientCard extends React.Component {
     render() {
         return (
-            <article className="article mb-8 mr-4 ml-4" key={this.props.id}>
-                <img src={this.props.image} alt="булочка" className=""/>
-                <div className="price">
+            <article className={`${styles.article} mb-8 mr-4 ml-4`} key={this.props.id}>
+                <img src={this.props.image} alt={this.props.name} />
+                <div className={appStyles.price}>
                     <p className='text text_type_digits-default'>{this.props.price}</p>
                     <CurrencyIcon type="primary"/>
                 </div>

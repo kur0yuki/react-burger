@@ -3,6 +3,7 @@
     max-height: 75vh;
     display: flex;
     flex-direction: column;
+    margin-left: auto;
 }
 
 .tabs{
@@ -23,12 +24,3 @@
     flex: 0 1 auto;
 }
 
-::-webkit-scrollbar{
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: #2F2F37;
-}
-::-webkit-scrollbar-thumb {
-    background: #8585AD;
-}

@@ -1,8 +1,3 @@
-.row{
-    display: flex;
-    flex-direction: row;
-}
-
 .AppHeader {
     display: flex;
     flex-direction: row;

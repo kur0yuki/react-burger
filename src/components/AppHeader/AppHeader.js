@@ -1,26 +1,27 @@
 import React from 'react';
 import { BurgerIcon, ListIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
-import './AppHeader.css'
+import styles from './AppHeader.module.css'
+import appStyles from '../../App.module.css'
 
 class AppHeader extends React.Component {
 
     render(){
-        return <div className='AppHeader m-5 p-2'>
-            <div className='row'>
-                <a className='mr-2 p-2 link row' href='#'>
+        return <div className={`${styles.AppHeader} m-5 p-2`}>
+            <div className={appStyles.row}>
+                <a className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} href='#'>
                     <BurgerIcon type="primary" />
                     <p className='text text_type_main-default ml-1'>Конструктор</p>
                 </a>
-                <a className='mr-2 p-2 link row' href='#'>
+                <a className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} href='#'>
                     <ListIcon type="secondary" />
                     <p className='text text_type_main-default text_color_inactive ml-1'>Лента заказов</p>
                 </a>
             </div>
-            <div className="logo">
-                <Logo className='logo' />
+            <div className={styles.logo}>
+                <Logo />
             </div>
 
-            <a className='mr-2 p-2 link row' href='#'>
+            <a className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} href='#'>
                 <BurgerIcon type="secondary" />
                 <p className='text text_type_main-default text_color_inactive ml-1'>Личный кабинет</p>
             </a>

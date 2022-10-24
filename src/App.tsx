@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.css';
 import AppHeader from "./components/AppHeader/AppHeader";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "./components/BurgerIngredients/BurgerIngridients";
@@ -221,10 +221,11 @@ const data = [
 function App(this: any) {
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <AppHeader />
-      <BurgerConstructor data={data} />
       <BurgerIngridients data={data} />
+      <BurgerConstructor bun={data.find(el => el.type==="bun")}
+                         mains={data.filter(el => el.type!=="bun")} />
     </div>
   );
 }

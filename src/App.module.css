@@ -1,0 +1,29 @@
+.App {
+  margin: auto;
+  background: #131316;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.price{
+  composes: row;
+  align-items: center;
+  gap: 8px;
+}
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}

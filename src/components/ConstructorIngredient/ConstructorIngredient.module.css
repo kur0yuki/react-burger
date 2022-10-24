@@ -1,0 +1,18 @@
+.article{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    width: 536px;
+    align-items: center;
+    background: #1C1C21;
+    box-sizing: border-box;
+    border-radius: 40px;
+}
+
+.container{
+    justify-content: end;
+}
+
+.name{
+    width: 254px;
+}
