@@ -1,4 +1,4 @@
-.BurgerIngridients{
+.BurgerIngridients {
     max-width: 600px;
     max-height: 75vh;
     display: flex;
@@ -6,13 +6,13 @@
     margin-left: auto;
 }
 
-.tabs{
+.tabs {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 
-.type{
+.type {
     grid-column: span 2
 }
 

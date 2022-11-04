@@ -5,8 +5,8 @@
     background: #1C1C21;
     position: relative;
     grid-column: span 2;
-    padding-left: calc((100% - 1280px)/2);
-    padding-right: calc((100% - 1280px)/2);
+    padding-left: calc((100% - 1280px) / 2);
+    padding-right: calc((100% - 1280px) / 2);
 }
 
 .link {
@@ -17,6 +17,6 @@
 
 .logo {
     position: absolute;
-    left: calc((100% - 290px)/ 2);
+    left: calc((100% - 290px) / 2);
 }
 
