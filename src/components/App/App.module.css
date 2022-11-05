@@ -1,6 +1,6 @@
 .App {
     margin: auto;
-    background: #131316;
+    background: var(--main-color);
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 40px;
@@ -23,9 +23,16 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #2F2F37;
+    background: var(--scrollbar-color);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #8585AD;
+    background: var(--scrollbar-thumb-color);
+}
+
+:root {
+    --main-color: #131316;
+    --scrollbar-color: #2F2F37;
+    --scrollbar-thumb-color: #8585AD;
+    --modal-bg-color: #1C1C21;
 }

@@ -4,6 +4,7 @@ import appStyles from '../App/App.module.css'
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {ingType} from "../../utils/data";
 import PropTypes from 'prop-types';
+import Order from "../Order/Order";
 
 function BurgerConstructor(props) {
     return (<section className={`${styles.BurgerConstructor}`}>
@@ -33,13 +34,19 @@ function BurgerConstructor(props) {
                 <p className='text text_type_digits-medium'>{props.mains.reduce((prev, el) => prev + el.price, 0)}</p>
                 <CurrencyIcon type={"primary"}/>
             </div>
-            <Button type="primary" size="medium" htmlType="submit">Оформить заказ</Button>
+            <Button type="primary" size="medium" htmlType="submit"
+                    onClick={() => {
+                        props.openModal(<Order orderId="034536"/>)
+                    }}>
+                Оформить заказ
+            </Button>
         </div>
     </section>)
 }
 
 BurgerConstructor.propTypes = {
     bun: ingType,
-    mains: PropTypes.arrayOf(ingType)
-}
+    mains: PropTypes.arrayOf(ingType),
+    openModal: PropTypes.func.isRequired
+};
 export default BurgerConstructor;
