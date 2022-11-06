@@ -3,35 +3,30 @@ import {useCallback, useEffect} from "react";
 import styles from './Modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 function Modal(props) {
     const root = document.getElementById("modal-root");
 
     const onClose = props.onClose;
-    const handleBgClick = useCallback((ev) => {
-        if (Array.from(ev.target.classList).some(cl => cl.includes('modalOverlay'))) {
-            onClose()
-        }
-    }, [onClose]);
 
     const handleEsc = useCallback(ev => {
-        if (ev.key === 'Esc') {
+        if (ev.key === 'Escape') {
             onClose()
         }
     }, [onClose]);
 
     useEffect(() => {
         if (props.isVisible) {
-            document.addEventListener('click', handleBgClick);
             document.addEventListener('keypress', handleEsc)
-        } else {
-            document.removeEventListener('click', handleBgClick);
+        }
+        return ()=> {
             document.removeEventListener('keypress', handleEsc)
         }
-    }, [props.isVisible, handleBgClick, handleEsc]);
+    }, [props.isVisible, handleEsc]);
 
     return ReactDOM.createPortal(
-        (<div className={styles.modalOverlay}>
+        (<div className={styles.modal}>
             <div className={`${styles.modalWindow} p-10 ${props.isVisible ? "" : styles.invisible}`}>
                 <div className={styles.titleRow}>
                     <h1 className="text text_type_main-medium">{props.title}</h1>
@@ -39,6 +34,7 @@ function Modal(props) {
                 </div>
                 {props.content}
             </div>
+            <ModalOverlay onClose={props.onClose}/>
         </div>),
         root
     );
