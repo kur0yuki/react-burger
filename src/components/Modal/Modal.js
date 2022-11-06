@@ -18,10 +18,10 @@ function Modal(props) {
 
     useEffect(() => {
         if (props.isVisible) {
-            document.addEventListener('keypress', handleEsc)
+            document.addEventListener('keydown', handleEsc)
         }
         return ()=> {
-            document.removeEventListener('keypress', handleEsc)
+            document.removeEventListener('keydown', handleEsc)
         }
     }, [props.isVisible, handleEsc]);
 
