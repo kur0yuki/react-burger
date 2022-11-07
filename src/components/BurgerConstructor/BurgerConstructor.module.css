@@ -1,0 +1,23 @@
+.BurgerConstructor {
+    width: 600px;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    padding-top: 60px;
+    align-items: flex-end;
+}
+
+.scrollableWindow {
+    max-height: 462px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.article {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
