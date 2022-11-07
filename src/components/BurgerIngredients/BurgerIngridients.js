@@ -16,22 +16,29 @@ function BurgerIngridients(props) {
         <div className={styles.ingridientsWindow}>
             <h2 className={`${styles.type} mb-6 text text_type_main-medium`}>Булки</h2>
             {props.data.filter(thing => thing.type === "bun").map(bun =>
-                (<IngredientCard ing={bun} key={bun._id}/>)
+                (<IngredientCard ing={bun} key={bun._id}
+                                 openModal={props.openModal}
+                />)
             )}
             <h2 className={`${styles.type} mb-6 text text_type_main-medium`}>Соусы</h2>
             {props.data.filter(thing => thing.type === "sauce").map(sauce =>
-                (<IngredientCard ing={sauce} key={sauce._id}/>))
+                (<IngredientCard ing={sauce} key={sauce._id}
+                                 openModal={props.openModal}
+                />))
             }
             <h2 className={`${styles.type} mb-6 text text_type_main-medium`}>Котлетка</h2>
             {props.data.filter(thing => thing.type === "main").map(main =>
-                (<IngredientCard ing={main} key={main._id}/>))
+                (<IngredientCard ing={main} key={main._id}
+                                 openModal={props.openModal}
+                />))
             }
         </div>
     </div>)
 }
 
 BurgerIngridients.propTypes = {
-    data: PropTypes.arrayOf(ingType)
-}
+    data: PropTypes.arrayOf(ingType).isRequired,
+    openModal: PropTypes.func.isRequired
+};
 
 export default BurgerIngridients;
