@@ -3,8 +3,9 @@ import styles from './App.module.css';
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
-import {url} from "../../utils/data";
 import Modal from "../Modal/Modal";
+import {DataContext} from '../../contexts/dataContext'
+import {getIngredients} from "../../utils/api";
 
 function App() {
     const [state, setState] = useState({
@@ -19,20 +20,12 @@ function App() {
     });
 
     useEffect(() => {
-        const getIngredients = async () => {
             setState({
                 isLoaded: false,
                 hasError: false,
                 data: []
-            });
-            await fetch(url)
-                .then(res => {
-                    if (res.ok) {
-                        return res.json();
-                    } else {
-                        return Promise.reject('Failed to load data')
-                    }
-                })
+            })
+            getIngredients()
                 .then(res => {
                     setState({
                         isLoaded: true,
@@ -42,15 +35,12 @@ function App() {
                 })
                 .catch(er => {
                     setState({
-                        ...state,
                         hasError: true,
-                        isLoaded: false
+                        isLoaded: false,
+                        data: []
                     });
                     console.error(er)
                 })
-        };
-        getIngredients()
-
     }, []);
 
     function onClose() {
@@ -69,20 +59,22 @@ function App() {
         })
     }
 
+    const data=state.data
+
     return (
         <div className={styles.App}>
             <AppHeader/>
             {state.hasError && <p>Something went wrong. Please reload</p>}
-            {state.isLoaded && <BurgerIngridients data={state.data}
-                                                  openModal={openModal}
-            />}
-            {state.isLoaded && <BurgerConstructor bun={state.data.find(el => el.type === "bun")}
-                                                  mains={state.data.filter(el => el.type !== "bun")}
-                                                  openModal={openModal}
-            />
-            }
-            {modal.showModal &&
-            <Modal content={modal.modal} onClose={onClose} isVisible={modal.showModal} title={modal.title}/>}
+            <DataContext.Provider value={data} >
+                {state.isLoaded && <BurgerIngridients openModal={openModal} />}
+                {state.isLoaded && <BurgerConstructor openModal={openModal} />}
+                {modal.showModal &&
+                <Modal content={modal.modal}
+                       onClose={onClose}
+                       isVisible={modal.showModal}
+                       title={modal.title} />
+                }
+            </DataContext.Provider>
         </div>
     );
 }

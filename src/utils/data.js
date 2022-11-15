@@ -8,4 +8,4 @@ export const ingType = PropTypes.shape({
     type: PropTypes.string
 })
 
-export const url = 'https://norma.nomoreparties.space/api/ingredients'
+export const base_url = 'https://norma.nomoreparties.space/api/'
