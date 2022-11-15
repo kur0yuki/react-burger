@@ -3,9 +3,8 @@ import styles from './App.module.css';
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
-import {url} from "../../utils/data";
 import Modal from "../Modal/Modal";
-import {DataContext} from './dataContext'
+import {DataContext} from '../../contexts/dataContext'
 import {getIngredients} from "../../utils/api";
 
 function App() {
@@ -36,9 +35,9 @@ function App() {
                 })
                 .catch(er => {
                     setState({
-                        ...state,
                         hasError: true,
-                        isLoaded: false
+                        isLoaded: false,
+                        data: []
                     });
                     console.error(er)
                 })
@@ -67,16 +66,14 @@ function App() {
             <AppHeader/>
             {state.hasError && <p>Something went wrong. Please reload</p>}
             <DataContext.Provider value={data} >
-                {state.isLoaded && <BurgerIngridients data={state.data}
-                                                      openModal={openModal}
-                />}
-                {state.isLoaded && <BurgerConstructor //bun={state.data.find(el => el.type === "bun")}
-                                                      //mains={state.data.filter(el => el.type !== "bun")}
-                                                      openModal={openModal}
-                />
-                }
+                {state.isLoaded && <BurgerIngridients openModal={openModal} />}
+                {state.isLoaded && <BurgerConstructor openModal={openModal} />}
                 {modal.showModal &&
-                <Modal content={modal.modal} onClose={onClose} isVisible={modal.showModal} title={modal.title}/>}
+                <Modal content={modal.modal}
+                       onClose={onClose}
+                       isVisible={modal.showModal}
+                       title={modal.title} />
+                }
             </DataContext.Provider>
         </div>
     );

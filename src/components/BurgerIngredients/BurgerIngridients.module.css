@@ -19,8 +19,10 @@
 .ingridientsWindow {
     overflow-y: auto;
     /*max-height: 65vh;*/
+    flex: 0 1 auto;
+}
+.typeSection{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    flex: 0 1 auto;
 }
 

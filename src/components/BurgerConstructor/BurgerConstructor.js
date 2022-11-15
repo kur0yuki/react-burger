@@ -1,16 +1,18 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useMemo, useReducer} from 'react';
 import styles from './BurgerConstructor.module.css'
 import appStyles from '../App/App.module.css'
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 import Order from "../Order/Order";
-import {DataContext} from "../App/dataContext";
+import {DataContext} from "../../contexts/dataContext";
 import {getOrderDetails} from "../../utils/api";
 
 function BurgerConstructor(props) {
     const data=useContext(DataContext)
-    const bun = data.find(el => el.type === "bun")
-    const mains= data.filter(el => el.type !== "bun")
+
+    const bun = useMemo(()=> data.find(el => el.type === "bun"), [data])
+    const mains= useMemo(()=> data.filter(el => el.type !== "bun"),[data])
+    const fullIngredientArray = useMemo(getIngArray, [bun, mains])
 
     function changePrice(price, action){
         switch(action.type){
@@ -30,7 +32,7 @@ function BurgerConstructor(props) {
     }
 
     function onOrder(){
-        return getOrderDetails(getIngArray())
+        return getOrderDetails(fullIngredientArray)
             .then(res => {
                 props.openModal(<Order orderId={res.order.number} />)
             })

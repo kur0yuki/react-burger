@@ -1,5 +1,7 @@
-const ingUrl = "https://norma.nomoreparties.space/api/ingredients"
-const orderUrl = "https://norma.nomoreparties.space/api/orders"
+import {base_url} from "./data";
+
+const ingUrl = base_url + "ingredients"
+const orderUrl = base_url +"orders"
 
 const checkResp = (resp) => {
     if (resp.ok){
