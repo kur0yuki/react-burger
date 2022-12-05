@@ -1,0 +1,114 @@
+import {combineReducers} from "redux";
+import {
+    ADD,
+    REMOVE,
+    CHANGE_ORDER,
+    SET_CURRENT_INGREDIENT,
+    CLEAR_CURRENT_INGREDIENT,
+    GET_ORDER_ID,
+    CLEAR_ORDER_ID,
+    ADD_BUN,
+    ADD_AT,
+    GET_INGREDIENTS_SUCCESS,
+    GET_INGREDIENTS_FAILED
+} from "../actions/actions";
+
+
+const burgerReducer = (state = {bun:null, main: []}, action) => {
+    const payload = action.payload
+    switch (action.type) {
+        case ADD_BUN: return {...state, bun:action.payload}
+        case ADD:
+            return {...state, main: [...state.main, action.payload]};
+        case ADD_AT:{
+            const main = [...state.main]
+            main.splice(action.payload.index+1, 0, action.payload.item)
+
+            return {...state, main: main}
+        }
+        case REMOVE: {
+            const main = [...state.main]
+            return {...state, main:main.splice(action.index, 1)};
+        }
+        case CHANGE_ORDER:
+            const main = [...state.main]
+            const item = {...state.main[action.payload.dragIndex]}
+            if (payload.index>payload.dragIndex){
+                main.splice(action.payload.index+1, 0, item)
+                main.splice(action.payload.dragIndex, 1)
+            } else {
+                main.splice(action.payload.dragIndex, 1)
+                main.splice(action.payload.index+1, 0, item)
+            }
+
+            return {...state, main: main}
+
+        default:
+            return state
+    }
+};
+
+const ingredientsReducer = (state = {
+    isLoaded: false,
+    hasError: false,
+    data: []
+}, action) => {
+    switch (action.type) {
+        case ADD_AT:return {
+                ...state,
+                data:
+                    [...state.data.map(object =>
+                        object._id === action.payload.item._id ? {...object, q: object.q+1} : object)]
+            };
+        case ADD:
+            return {
+                ...state,
+                data:
+                    [...state.data.map(object =>
+                        object._id === action.payload._id ? {...object, q: object.q+1} : object)]
+            };
+        case REMOVE:
+            return {
+                ...state,
+                data: state.data.map(object => object._id === action.id ? {...object, q: object.q-1} : object)
+            };
+        case GET_INGREDIENTS_SUCCESS:
+            return {
+                ...state,
+                isLoaded: true,
+                hasError: false,
+                data: action.ingredients.map(object => ({...object, q: 0}))
+            };
+        case GET_INGREDIENTS_FAILED:
+            return {
+                isLoaded: false,
+                hasError: true,
+                data: []
+            };
+
+        default:
+            return state
+    }
+};
+ const currentIngredient = (state={}, action) => {
+     switch(action.type){
+         case SET_CURRENT_INGREDIENT: return {ing: action.payload}
+         case CLEAR_CURRENT_INGREDIENT: return null
+         default: return state
+     }
+ }
+
+  const currentOrder = (state={}, action) => {
+     switch(action.type){
+         case GET_ORDER_ID: return {orderId: action.orderId}
+         case CLEAR_ORDER_ID: return null
+         default: return state
+     }
+ }
+
+export const rootReducer = combineReducers({
+    contents: burgerReducer,
+    ingredients: ingredientsReducer,
+    currentIngredient: currentIngredient,
+    currentOrder: currentOrder
+});

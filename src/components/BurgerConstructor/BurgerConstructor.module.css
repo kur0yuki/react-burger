@@ -9,6 +9,7 @@
 }
 
 .scrollableWindow {
+    min-height: 100px;
     max-height: 462px;
     overflow-y: scroll;
     display: flex;
@@ -20,4 +21,10 @@
     display: flex;
     align-items: center;
     gap: 4px;
+}
+.container{
+  display: flex;
+    gap: 8px;
+    flex-direction: column;
+
 }

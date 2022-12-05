@@ -1,65 +1,70 @@
-import React, {useContext, useMemo, useReducer} from 'react';
+import React, {useMemo} from 'react';
 import styles from './BurgerConstructor.module.css'
 import appStyles from '../App/App.module.css'
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
+import ContentItem from "./ContentItem/ContentItem";
 import Order from "../Order/Order";
-import {DataContext} from "../../contexts/dataContext";
-import {getOrderDetails} from "../../utils/api";
+import {addAction, addBunAction, makeOrderAction} from "../../services/actions/actions";
 
 function BurgerConstructor(props) {
-    const data=useContext(DataContext)
+    const {bun, mains} = useSelector(store=> ({
+        bun: store.contents.bun,
+        mains: store.contents.main,
+    }))
 
-    const bun = useMemo(()=> data.find(el => el.type === "bun"), [data])
-    const mains= useMemo(()=> data.filter(el => el.type !== "bun"),[data])
-    const fullIngredientArray = useMemo(getIngArray, [bun, mains])
+    const dispatch = useDispatch()
 
-    function changePrice(price, action){
-        switch(action.type){
-            case "add": return price+action.price
-            case "remove": return price-action.price
-            default: return price
+const [{isOver}, drop] = useDrop({
+        accept:["bun", "sauce", "main"],
+        collect: (monitor) => ({isOver: monitor.isOver()}),
+        drop: (item, monitor) => {
+            if (item.type==='bun') {
+                //dispatch({type: "ADD_BUN", payload: item})
+                dispatch(addBunAction(item))
+                return
+            }
+            if(monitor.didDrop()) return;
+            //dispatch({type: "ADD", payload: item})
+            dispatch(addAction(item))
         }
-
-    }
-
-    const [price] = useReducer(changePrice, 0, ()=>{
-        return (bun.price*2+mains.reduce((prev, el) => prev + el.price, 0))
     })
+
+
+    const price = useMemo(()=>{
+        return ((bun?bun.price:0)*2+mains.reduce((price, item) => price+item.price, 0))
+    },[bun, mains])
 
     function getIngArray(){
         return [bun._id].concat(mains.map(ing=> ing._id)).concat(bun._id)
     }
 
     function onOrder(){
-        return getOrderDetails(fullIngredientArray)
-            .then(res => {
-                props.openModal(<Order orderId={res.order.number} />)
-            })
+        dispatch(makeOrderAction(getIngArray()))
+        props.openModal(<Order />)
     }
 
-    return (<section className={`${styles.BurgerConstructor}`}>
-        <ConstructorElement type="top"
+
+
+    return (<section className={`${styles.BurgerConstructor}`} ref={drop}>
+        <div className={styles.container} >
+        {bun && <ConstructorElement type="top"
                             isLocked={true}
                             text={bun.name + " (верх)"}
                             price={bun.price}
-                            thumbnail={bun.image_mobile}/>
+                            thumbnail={bun.image_mobile}/>}
         <div className={styles.scrollableWindow}>
-            {mains.map(ing =>
-                (<article className={styles.article} key={ing._id}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement
-                        text={ing.name}
-                        price={ing.price}
-                        thumbnail={ing.image_mobile}/>
-                </article>)
+            {mains.map((ing, index) => (<ContentItem key={index} ing={ing} index={index} />)
             )}
         </div>
-        <ConstructorElement type="bottom"
+        {bun && <ConstructorElement type="bottom"
                             isLocked={true}
                             text={bun.name + " (низ)"}
                             price={bun.price}
-                            thumbnail={bun.image_mobile}/>
+                            thumbnail={bun.image_mobile}/>}
+        </div>
         <div className={`${appStyles.row} mt-10 `}>
             <div className={`${appStyles.price} mr-10`}>
                 <p className='text text_type_digits-medium'>{price}</p>

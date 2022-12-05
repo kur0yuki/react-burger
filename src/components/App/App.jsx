@@ -4,44 +4,28 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
 import Modal from "../Modal/Modal";
-import {DataContext} from '../../contexts/dataContext'
-import {getIngredients} from "../../utils/api";
+import {getIngredientsAction} from "../../services/actions/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
 
 function App() {
-    const [state, setState] = useState({
-        isLoaded: false,
-        hasError: false,
-        data: []
-    });
+
+    const dispatch = useDispatch();
+
+    const {isLoaded, hasError} = useSelector(store => (store.ingredients))
+
     const [modal, setModal] = useState({
         showModal: false,
         modal: null,
         title: null
     });
 
+
     useEffect(() => {
-            setState({
-                isLoaded: false,
-                hasError: false,
-                data: []
-            })
-            getIngredients()
-                .then(res => {
-                    setState({
-                        isLoaded: true,
-                        hasError: false,
-                        data: res.data
-                    })
-                })
-                .catch(er => {
-                    setState({
-                        hasError: true,
-                        isLoaded: false,
-                        data: []
-                    });
-                    console.error(er)
-                })
-    }, []);
+        dispatch(getIngredientsAction())
+        }, [dispatch])
+
 
     function onClose() {
         setModal({
@@ -59,22 +43,22 @@ function App() {
         })
     }
 
-    const data=state.data
 
     return (
         <div className={styles.App}>
             <AppHeader/>
-            {state.hasError && <p>Something went wrong. Please reload</p>}
-            <DataContext.Provider value={data} >
-                {state.isLoaded && <BurgerIngridients openModal={openModal} />}
-                {state.isLoaded && <BurgerConstructor openModal={openModal} />}
-                {modal.showModal &&
-                <Modal content={modal.modal}
-                       onClose={onClose}
-                       isVisible={modal.showModal}
-                       title={modal.title} />
+            {hasError && <p>Something went wrong. Please reload</p>}
+
+                <DndProvider backend={HTML5Backend}>
+                    {isLoaded && <BurgerIngridients openModal={openModal}/>}
+                    {isLoaded && <BurgerConstructor openModal={openModal}/>}
+                </DndProvider>
+                {modal.showModal && <Modal content={modal.modal}
+                                             onClose={onClose}
+                                             isVisible={modal.showModal}
+                                             title={modal.title}/>
                 }
-            </DataContext.Provider>
+
         </div>
     );
 }
