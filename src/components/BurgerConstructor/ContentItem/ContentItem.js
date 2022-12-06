@@ -4,6 +4,7 @@ import React, {useRef} from "react";
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch} from "react-redux";
 import {addAtAction, removeAction, reorderAction} from "../../../services/actions/actions";
+import {v4 as uuid} from "uuid";
 
 export default function ContentItem({ing, index}) {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function ContentItem({ing, index}) {
                 return
             }
             if (item.index === undefined) {
-                dispatch(addAtAction(index, item));
+                dispatch(addAtAction(index, {...item, uuid: uuid()}));
                 //dispatch({type: "ADD_AT", payload: {item, index}})
                 return
             }
@@ -34,7 +35,7 @@ export default function ContentItem({ing, index}) {
 
     const [, drag] = useDrag({
         type: "main",
-        item: {index}
+        item: {index, reorder: true}
     });
     drag(drop(ref));
     return (
