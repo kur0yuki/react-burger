@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngridients.module.css'
 import IngredientCard from "../IngredientCard/IngredientCard";
 import PropTypes from "prop-types";
-import {DataContext} from "../../contexts/dataContext";
+import { useSelector} from "react-redux";
 
 function BurgerIngridients(props) {
-    const data = useContext(DataContext);
+    const data = useSelector(store=>store.ingredients.data)
     const tabBunRef = useRef();
     const tabSauceRef = useRef();
     const tabMainRef = useRef();
@@ -20,13 +20,15 @@ function BurgerIngridients(props) {
         }
     }, []);
 
-    let observer = new IntersectionObserver(callback, options);
+
 
     useEffect(() => {
+        const observer = new IntersectionObserver(callback, options);
+
         observer.observe(tabBunRef.current);
         observer.observe(tabSauceRef.current);
         observer.observe(tabMainRef.current)
-    }, []);
+    }, [options]);
 
     function callback(entries, observer) {
         //console.log(entries)

@@ -1,10 +1,13 @@
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
+import {useSelector} from "react-redux";
 
 function Order(props) {
+    const {orderId} = useSelector(store=> ({
+        orderId: store.currentOrder.orderId
+    }))
     return (
         <>
-            <p className='text text_type_digits-large mt-4 mb-8'>{props.orderId}</p>
+            <p className='text text_type_digits-large mt-4 mb-8'>{orderId}</p>
             <p className='text text_type_main-default mb-15'>идентификатор заказа</p>
             <CheckMarkIcon type={"primary"}/>
             <p className='text text_type_main-default mt-15'>Ваш заказ начали готовить</p>
@@ -13,9 +16,5 @@ function Order(props) {
         </>
     )
 }
-
-Order.propTypes = {
-    orderId: PropTypes.number.isRequired
-};
 
 export default Order;

@@ -1,7 +1,8 @@
 import styles from './Ingredient.module.css'
-import {ingType} from "../../utils/data";
+import {useSelector} from "react-redux";
 
-function Ingredient({ing}) {
+function Ingredient() {
+    const {ing} = useSelector(store=> store.currentIngredient)
     return (
         <>
             <img src={ing.image_large} alt={ing.name} className='mb-4'/>
@@ -29,9 +30,5 @@ function Ingredient({ing}) {
         </>
     )
 }
-
-Ingredient.propTypes = {
-    ing: ingType.isRequired
-};
 
 export default Ingredient
