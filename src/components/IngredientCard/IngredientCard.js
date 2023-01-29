@@ -23,7 +23,8 @@ function IngredientCard(props) {
                      dispatch({type: SET_CURRENT_INGREDIENT, payload: props.ing})
                      props.openModal(
                          <Ingredient />,
-                         'Детали ингредиента')
+                         'Детали ингредиента',
+                         props.ing._id)
                  }}
                  ref = {dragRef}
         >

@@ -13,6 +13,7 @@ import {
     REMOVE,
     SET_CURRENT_INGREDIENT
 } from "../actions/actions";
+import {AUTH_ERROR, GET_USER_INFO, REFRESH_TOKEN, SET_USER_INFO, SIGN_IN} from "../actions/auth-actions";
 
 
 const burgerReducer = (state = {bun: null, main: []}, action) => {
@@ -131,9 +132,36 @@ const currentOrder = (state = {}, action) => {
     }
 };
 
+const userReducer = (state = {}, action) => {
+    switch(action.type){
+        case SIGN_IN:
+        case GET_USER_INFO:
+            return action.user
+        case AUTH_ERROR:
+            return null
+        default:
+            return state
+    }
+}
+
+const tokenReducer = (state='', action) => {
+    switch(action.type){
+        case SET_USER_INFO:
+        case GET_USER_INFO:
+        case AUTH_ERROR:
+            return false
+        case REFRESH_TOKEN:
+            return true
+        default:
+            return state
+    }
+}
+
 export const rootReducer = combineReducers({
     contents: burgerReducer,
     ingredients: ingredientsReducer,
     currentIngredient: currentIngredient,
-    currentOrder: currentOrder
+    currentOrder: currentOrder,
+    user: userReducer,
+    tokenRefresh: tokenReducer
 });

@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers/rootReducer';
 import {configureStore} from "@reduxjs/toolkit";
+import CustomRouter from "./components/CustomRouter/CustomRouter";
 
 
 const store = configureStore({
@@ -19,11 +20,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
       <Provider store={store}>
-        <App />
+
+             <CustomRouter/>
       </Provider>
-  </React.StrictMode>
+  //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

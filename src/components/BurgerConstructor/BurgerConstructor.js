@@ -9,6 +9,8 @@ import ContentItem from "./ContentItem/ContentItem";
 import Order from "../Order/Order";
 import {addAction, addBunAction, makeOrderAction, reorderAction} from "../../services/actions/actions";
 import {v4 as uuid} from 'uuid';
+import {getCookie} from "../../utils/api";
+import {useHistory} from "react-router";
 
 
 function BurgerConstructor(props) {
@@ -18,6 +20,7 @@ function BurgerConstructor(props) {
     }));
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [{isOver}, drop] = useDrop({
         accept: ["bun", "sauce", "main"],
@@ -48,8 +51,14 @@ function BurgerConstructor(props) {
     }
 
     function onOrder() {
-        dispatch(makeOrderAction(getIngArray()));
-        props.openModal(<Order/>)
+        const hasToken = getCookie('accessToken');
+
+        if (!hasToken) {
+            history.push('/login')
+        } else {
+            dispatch(makeOrderAction(getIngArray()));
+            props.openModal(<Order/>)
+        }
     }
 
 
