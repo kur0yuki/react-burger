@@ -13,7 +13,7 @@ import {
     REMOVE,
     SET_CURRENT_INGREDIENT
 } from "../actions/actions";
-import {AUTH_ERROR, GET_USER_INFO, REFRESH_TOKEN, SET_USER_INFO, SIGN_IN} from "../actions/auth-actions";
+import {AUTH_ERROR, GET_USER_INFO, REFRESH_TOKEN, SET_USER_INFO, SIGN_IN, SIGN_OUT} from "../actions/auth-actions";
 
 
 const burgerReducer = (state = {bun: null, main: []}, action) => {
@@ -138,6 +138,7 @@ const userReducer = (state = {}, action) => {
         case GET_USER_INFO:
             return action.user
         case AUTH_ERROR:
+        case SIGN_OUT:
             return null
         default:
             return state

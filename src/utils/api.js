@@ -58,7 +58,7 @@ export function signInRequest(data) {
 }
 
 export function signOutRequest() {
-    return makeRequest(signOutUrl, true)
+    return makeRequest(signOutUrl, true, {token: getCookie('refreshToken')})
 }
 
 export function registerRequest(data) {

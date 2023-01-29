@@ -24,6 +24,8 @@ export const RESET_REQUEST_SAVE = 'RESET_REQUEST_SAVE';
 export function signOut() {
     return function (dispatch) {
         signOutRequest().then(res => {
+            setCookie('accessToken', null, {expires: -1})
+            setCookie('refreshToken', null,{expires: -1})
             dispatch({type: SIGN_OUT})
         }).catch(console.log)
     }

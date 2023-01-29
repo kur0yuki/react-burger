@@ -54,7 +54,7 @@ const LoginPage = () => {
         </form>
         <p className='text text_type_main-default text_color_inactive mb-4'>
             Вы — новый пользователь?
-            <Link to='/sign-up'> Зарегистрироваться</Link></p>
+            <Link to='/register'> Зарегистрироваться</Link></p>
         <p className='text text_type_main-default text_color_inactive'>
             Забыли пароль?
             <Link to='/reset-password'> Восстановить пароль</Link></p>

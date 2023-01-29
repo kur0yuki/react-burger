@@ -2,7 +2,7 @@ import styles from './styles.module.css'
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
 import {resetPasswordSave} from "../services/actions";
 import {getCookie} from "../utils/api";
 
@@ -16,6 +16,7 @@ const ResetPasswordPage = () => {
     };
     const dispatch = useDispatch();
     const history = useHistory()
+    const location = useLocation()
     const user=useSelector(store=> store.user)
     const hasToken = getCookie('accessToken')
 
@@ -34,7 +35,8 @@ const ResetPasswordPage = () => {
         dispatch(resetPasswordSave({password, token}));
         history.replace({pathname: "/login"})
     };
-    if (history?.state?.state?.from!=='forgot'){
+
+    if (location?.state?.from!=='forgot'){
         return (<Redirect  to={'/forgot-password'}/>)
     }
 
@@ -50,9 +52,10 @@ const ResetPasswordPage = () => {
                        placeholder={'Введите код из письма'}
                        value={token}
                        onChange={onChange(setToken)}
+                       extraClass='mb-6'
                 />
                 <Button htmlType="submit" type="primary" size="medium"
-                        onClick={onClick} extraClass={`mb-20 ${styles.button}`}
+                        extraClass={`mb-20 ${styles.button}`}
                 >
                     Сохранить
                 </Button>

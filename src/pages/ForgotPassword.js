@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
 
     const onClick = () => {
         dispatch(resetPassword({email}))
-        history.replace({pathname: "/reset-password", state: {from: "forgot"}})
+        history.push({pathname: "/reset-password", state: {from: "forgot"}})
     };
 
     return (
