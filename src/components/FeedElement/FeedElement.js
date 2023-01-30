@@ -3,7 +3,11 @@ import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-
 import {useSelector} from "react-redux";
 import {v4 as uuid} from 'uuid';
 
-const FeedElement = ({order, icons})=>{
+const FeedElement = ({order, info})=>{
+    if (!info) {
+        return null
+    }
+    const {icons, price} = info
     const maxZIdx = icons.length;
 
     return (<article className={`${styles.container} p-6`}>
@@ -17,7 +21,7 @@ const FeedElement = ({order, icons})=>{
                 return <img src={icon} alt={icon} className={styles.icon} key={uuid()} style={{left: -24-96*idx, zIndex:maxZIdx-idx}} />
                 //return <p key={uuid()}>1 </p>
             })}</div>
-            <p className={`text text_type_digits-default ${styles.row}`}>{order.price?order.price:100} <CurrencyIcon /></p>
+            <p className={`text text_type_digits-default ${styles.row}`}>{price} <CurrencyIcon /></p>
         </div>
 
     </article>)

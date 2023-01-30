@@ -12,13 +12,15 @@ export default function FeedPage() {
     const dispatch = useDispatch();
 
     function makeIconsArray(ids) {
+        let price = 0;
         const icons = ids.map(id => {
             const ing = data.find(ing => ing._id === id);
             //console.log(ing.image_mobile)
+            price+=ing.price
             return ing.image_mobile
         });
         //console.log(icons)
-        return icons
+        return {icons, price}
     }
 
     useEffect(() => {
@@ -63,7 +65,7 @@ export default function FeedPage() {
             <section className={styles.scrollableWindow}>
                 {orders.map(order => (<Link key={order._id} to={'/feed/' + order._id}
                                             className={`${styles.link} text text_type_main-default text_color_primary`}>
-                    <FeedElement order={order} icons={makeIconsArray(order.ingredients)}/>
+                    <FeedElement order={order} info={makeIconsArray(order.ingredients)}/>
                 </Link>))}
             </section>
             <section className={''}>
