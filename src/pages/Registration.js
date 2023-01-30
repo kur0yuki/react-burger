@@ -33,8 +33,10 @@ const RegistrationPage = () => {
     };
     const dispatch = useDispatch();
 
-    const onClick = () => {
+    const onClick = (e) => {
+        e.preventDefault()
         dispatch(register({email, password, name}))
+        history.push('/login')
     };
 
     return (
