@@ -43,5 +43,46 @@
 }
 
 .main{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1280px;
+    overflow-y: scroll;
 
+}
+
+.scrollableWindow {
+    max-height: calc(100vh - 208px);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+
+}
+/*
+.feedInfo{
+    display: flex;
+    gap: 60px;
+    flex-direction: column;
+}
+*/
+
+.col{
+    display: grid;
+grid-auto-flow: column;
+grid-template-rows: repeat(10, auto);
+    gap: 8px;
+    max-height: 340px;
+}
+.column{
+    flex:1
+}
+
+.wrappable{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 36px
 }

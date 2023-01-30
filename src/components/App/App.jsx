@@ -10,6 +10,7 @@ import ProfilePage from "../../pages/ProfilePage";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppHeader from "../AppHeader/AppHeader";
 import IngredientPage from "../../pages/IngredientPage";
+import FeedPage from "../../pages/FeedPage";
 ;
 
 function App() {
@@ -42,9 +43,17 @@ function App() {
                             {location?.state?.from === '/' && <MainPage/>}
                             {location?.state?.from !== '/' && <IngredientPage/>}
                         </Route>
+                        <ProtectedRoute path="/profile/orders/:id">
+                            Later
+                        </ProtectedRoute>
                         <ProtectedRoute path="/profile/orders">
                             Later
                         </ProtectedRoute>
+                        <Route path="/feed/:id" >
+                        </Route>
+                        <Route path="/feed" >
+                            <FeedPage />
+                        </Route>
                     </Switch>
 
         </div>

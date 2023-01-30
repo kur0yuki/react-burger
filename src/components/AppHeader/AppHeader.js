@@ -14,9 +14,9 @@ function AppHeader() {
                     <BurgerIcon type="primary"/>
                     <p className={"text text_type_main-default ml-1"+(location.pathname!=='/'?" text_color_inactive":"")}>Конструктор</p>
                 </Link>
-                <Link className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} to='/orders'>
+                <Link className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} to='/feed'>
                     <ListIcon type="secondary"/>
-                    <p className={'text text_type_main-default ml-1'+(location.pathname!=='/orders'?" text_color_inactive":"")}>Лента заказов</p>
+                    <p className={'text text_type_main-default ml-1'+(location.pathname!=='/feed'?" text_color_inactive":"")}>Лента заказов</p>
                 </Link>
             </div>
             <div className={styles.logo}>
