@@ -1,6 +1,7 @@
 .OrderDetails{
     width: 640px;
     z-index: 100;
+    margin: 0 auto;
 }
 
 .textCentered{

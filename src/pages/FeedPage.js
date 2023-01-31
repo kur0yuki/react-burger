@@ -3,7 +3,7 @@ import styles from './styles.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useMemo, useState} from "react";
 import {getIngredientsAction} from "../services/actions/actions";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import {WS_CONNECTION_START} from "../services/actions/ws-actions";
 import ScrollableList from "../components/ScrollableList/ScrollableList";
 import Modal from "../components/Modal/Modal";
@@ -15,7 +15,9 @@ export default function FeedPage() {
     const {orders, connected, totalToday, total} = useSelector(store => store.feed);
     const dispatch = useDispatch();
     const history = useHistory()
+    const location = useLocation()
     const [modal, setModal] = useState({});
+
     const onOpen = (order) => ()=> setModal({modal: <OrderDetails order={order} info={makeInfoArray(order.ingredients, data)} />, showModal: true})
 
     useEffect(() => {
@@ -26,6 +28,13 @@ export default function FeedPage() {
             dispatch({type: WS_CONNECTION_START})
         }
     }, [connected]);
+
+    useEffect(()=>{
+        const orderChosen = location.pathname.split('/')
+        if(orders.length>0&&orderChosen.length===3){
+            onOpen(orders.find(order=> order._id===orderChosen[2]))()
+        }
+    },[location, orders])
 
     const ordersWIP = useMemo(() => {
         return orders.filter(order => order.status !== 'done')

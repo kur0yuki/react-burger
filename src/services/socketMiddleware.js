@@ -1,5 +1,6 @@
 import {WS_CONNECTION_START_USER} from "./actions/ws-actions";
 import {getCookie} from "../utils/api";
+import {refreshToken} from "./actions";
 
 export const socketMiddleware = (wsUrl, wsActions) => {
     return store => {
@@ -12,6 +13,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
             if (type === wsInit) {
                 if (wsInit===WS_CONNECTION_START_USER){
+                    dispatch(refreshToken)
                     console.log(wsUrl+getCookie('accessToken').split(' ')[1])
                     socket = new WebSocket(wsUrl+getCookie('accessToken').split(' ')[1]);
                 } else {
@@ -38,6 +40,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
                 };
 
                 socket.onclose = event => {
+                    dispatch(refreshToken)
+                    dispatch({type: WS_CONNECTION_START_USER})
                     dispatch({type: onClose, payload: event});
                 };
 

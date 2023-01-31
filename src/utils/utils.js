@@ -16,6 +16,7 @@ export const openModal = (setModal) => (content) => {
 
 export function makeInfoArray(ids, data) {
     //const ex = {icon, name, count, price}
+    if (!ids||data.length===0) {return null}
     let price = 0;
     const dict = {};
     ids.forEach(id => {

@@ -69,8 +69,8 @@ export function register(creds) {
 export function refreshToken(request) {
     return function (dispatch) {
         refreshTokenRequest({token: getCookie("refreshToken")}).then(res => {
-            setCookie('accessToken', res.accessToken);
-            setCookie('refreshToken', res.refreshToken);
+            setCookie('accessToken', res.accessToken, {path: '/'});
+            setCookie('refreshToken', res.refreshToken, {path: '/'});
             dispatch({type: REFRESH_TOKEN, accessToken: res.accessToken})
             dispatch(request())
         }).catch(res => dispatch({type: AUTH_ERROR, token: true}))
