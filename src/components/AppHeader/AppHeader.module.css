@@ -4,7 +4,6 @@
     justify-content: space-between;
     background: var(--modal-bg-color);
     position: relative;
-    grid-column: span 2;
     padding-left: calc((100% - 1280px) / 2);
     padding-right: calc((100% - 1280px) / 2);
 }
