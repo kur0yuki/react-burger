@@ -2,7 +2,8 @@
     margin: 0 auto;
     max-width: 1280px;
 }
-.formWrapper{
+
+.formWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,13 +11,13 @@
     text-align: center;
 }
 
-.twoCols{
+.twoCols {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 40px;
 }
 
-.button{
+.button {
     width: fit-content;
     align-self: center;
 }
@@ -30,10 +31,11 @@
     gap: 60px;
 }
 
-.link{
+.link {
     text-decoration: none;
 
 }
+
 .scrollableWindow {
     max-height: calc(100vh - 248px);
     overflow-y: scroll;
@@ -43,22 +45,20 @@
 
 }
 
-
-.col{
+.col {
     display: grid;
-grid-auto-flow: column;
-grid-template-rows: repeat(10, auto);
+    grid-auto-flow: column;
+    grid-template-rows: repeat(10, auto);
     gap: 8px;
-    max-height: 340px;
-}
-.column{
-    flex:1
 }
 
-.wrappable{
+.wrappable {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 36px
+}
+.column {
+    flex: 1
 }

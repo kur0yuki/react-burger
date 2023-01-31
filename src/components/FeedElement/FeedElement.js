@@ -19,7 +19,6 @@ const FeedElement = ({order, info})=>{
         <div className={styles.row}>
             <div className={styles.icons}>{icons.map((icon, idx) => {
                 return <img src={icon} alt={icon} className={styles.icon} key={uuid()} style={{left: -24-96*idx, zIndex:maxZIdx-idx}} />
-                //return <p key={uuid()}>1 </p>
             })}</div>
             <p className={`text text_type_digits-default ${styles.row}`}>{price} <CurrencyIcon /></p>
         </div>

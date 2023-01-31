@@ -1,28 +1,22 @@
 import FeedElement from "../components/FeedElement/FeedElement";
 import styles from './styles.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {getIngredientsAction} from "../services/actions/actions";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {WS_CONNECTION_START} from "../services/actions/ws-actions";
 import ScrollableList from "../components/ScrollableList/ScrollableList";
+import Modal from "../components/Modal/Modal";
+import {makeIconsArray, makeInfoArray, onClose, openModal} from "../utils/utils";
+import OrderDetails from "../components/OrderDetails/OrderDetails";
 
 export default function FeedPage() {
     const {data, isLoaded} = useSelector(store => store.ingredients);
     const {orders, connected, totalToday, total} = useSelector(store => store.feed);
     const dispatch = useDispatch();
-
-    function makeIconsArray(ids) {
-        let price = 0;
-        const icons = ids.map(id => {
-            const ing = data.find(ing => ing._id === id);
-            //console.log(ing.image_mobile)
-            price+=ing.price
-            return ing.image_mobile
-        });
-        //console.log(icons)
-        return {icons, price}
-    }
+    const history = useHistory()
+    const [modal, setModal] = useState({});
+    const onOpen = (order) => ()=> setModal({modal: <OrderDetails order={order} info={makeInfoArray(order.ingredients, data)} />, showModal: true})
 
     useEffect(() => {
         if (data.length === 0) {
@@ -40,20 +34,6 @@ export default function FeedPage() {
         return orders.filter(order => order.status === 'done')
     }, [orders]);
 
-    /* const order = {
-         "ingredients": [
-             "60d3b41abdacab0026a733c6",
-             "60d3b41abdacab0026a733c6",
-             "60d3b41abdacab0026a733c6",
-             "60d3b41abdacab0026a733c6"
-         ],
-         "_id": "1",
-         "status": "done",
-         "number": 0,
-         "createdAt": "2021-06-23T14:43:22.587Z",
-         "updatedAt": "2021-06-23T14:43:22.603Z",
-         "name": "Death Star Starship Main бургер"
-     };*/
 
     if (!isLoaded || !connected) {
         return (<p>Try again later</p>)
@@ -63,9 +43,10 @@ export default function FeedPage() {
         <h1 className={'text text_type_main-large mb-5'}>Лента заказов</h1>
         <div className={styles.twoCols}>
             <section className={styles.scrollableWindow}>
-                {orders.map(order => (<Link key={order._id} to={'/feed/' + order._id}
-                                            className={`${styles.link} text text_type_main-default text_color_primary`}>
-                    <FeedElement order={order} info={makeIconsArray(order.ingredients)}/>
+                {orders.map(order => (<Link key={order._id} to={{pathname:'/feed/' + order._id, state: {from: '/'}}}
+                                            className={`${styles.link} text text_type_main-default text_color_primary`}
+                                            onClick = {onOpen(order)}>
+                    <FeedElement order={order} info={makeIconsArray(order.ingredients, data)}/>
                 </Link>))}
             </section>
             <section className={''}>
@@ -95,5 +76,9 @@ export default function FeedPage() {
 
             </section>
         </div>
+        {modal?.showModal && <Modal content={modal.modal}
+                                    onClose={onClose(setModal, history)}
+                                    isVisible={modal.showModal}
+        />}
     </main>
 }
