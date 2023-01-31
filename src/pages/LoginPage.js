@@ -34,8 +34,8 @@ const LoginPage = () => {
 
 
 
-    return (<div className={styles.centered}>
-        <h1 className='text_color_primary text text_type_main-medium mb-6'>Вход</h1>
+    return (<div className={`${styles.formWrapper} ${styles.centered} mt-30`}>
+        <h1 className='text_color_primary text text_type_main-medium mb-6 pt-15'>Вход</h1>
         <form onSubmit={onClick}>
         <EmailInput value={email}
                     onChange={onChange}

@@ -14,7 +14,13 @@ import {
     SET_CURRENT_INGREDIENT
 } from "../actions/actions";
 import {AUTH_ERROR, GET_USER_INFO, REFRESH_TOKEN, SET_USER_INFO, SIGN_IN, SIGN_OUT} from "../actions/auth-actions";
-import {WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE} from "../actions/ws-actions";
+import {
+    WS_CONNECTION_CLOSED, WS_CONNECTION_CLOSED_USER,
+    WS_CONNECTION_ERROR, WS_CONNECTION_ERROR_USER,
+    WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_SUCCESS_USER,
+    WS_GET_MESSAGE, WS_GET_MESSAGE_USER
+} from "../actions/ws-actions";
 
 
 const burgerReducer = (state = {bun: null, main: []}, action) => {
@@ -173,6 +179,20 @@ const wsReducerAllFeed = (state = {connected: false, orders:[]}, action) => {
 
     }
 };
+const wsReducerUser= (state = {connected: false, orders:[]}, action) => {
+    switch (action.type) {
+        case WS_CONNECTION_SUCCESS_USER:
+            return {...state, connected: true};
+        case WS_CONNECTION_ERROR_USER:
+        case WS_CONNECTION_CLOSED_USER:
+            return {...state, connected: false};
+        case WS_GET_MESSAGE_USER:
+            return {...state, orders:action.payload.orders}
+        default:
+            return state
+
+    }
+};
 
 export const rootReducer = combineReducers({
     contents: burgerReducer,
@@ -181,5 +201,6 @@ export const rootReducer = combineReducers({
     currentOrder: currentOrder,
     user: userReducer,
     tokenRefresh: tokenReducer,
-    feed: wsReducerAllFeed
+    feed: wsReducerAllFeed,
+    userOrders: wsReducerUser
 });

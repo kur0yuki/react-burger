@@ -9,13 +9,13 @@ import { rootReducer } from './services/reducers/rootReducer';
 import {configureStore} from "@reduxjs/toolkit";
 import CustomRouter from "./components/CustomRouter/CustomRouter";
 import {socketMiddleware} from "./services/socketMiddleware";
-import {wsActions} from "./services/actions/ws-actions";
+import {wsActions, wsActions_user} from "./services/actions/ws-actions";
 import thunkMiddleware from 'redux-thunk';
 
 const store = configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunkMiddleware,socketMiddleware('wss://norma.nomoreparties.space/orders/all',wsActions)]
+    middleware: [thunkMiddleware,socketMiddleware('wss://norma.nomoreparties.space/orders/all',wsActions),socketMiddleware('wss://norma.nomoreparties.space/orders?token=',wsActions_user)]
 })
 
 const root = ReactDOM.createRoot(

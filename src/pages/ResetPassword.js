@@ -41,8 +41,8 @@ const ResetPasswordPage = () => {
     }
 
     return (
-        <div className={styles.centered}>
-            <h1 className='text_color_primary text text_type_main-medium mb-6'>Восстановление пароля</h1>
+        <div className={`${styles.formWrapper} ${styles.centered} mt-30`}>
+            <h1 className='text_color_primary text text_type_main-medium mb-6 pt-15'>Восстановление пароля</h1>
             <form onSubmit={onClick}>
                 <PasswordInput value={password}
                                onChange={onChange(setPassword)}

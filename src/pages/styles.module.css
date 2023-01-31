@@ -1,5 +1,8 @@
-.centered{
-    margin: 180px auto;
+.centered {
+    margin: 0 auto;
+    max-width: 1280px;
+}
+.formWrapper{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,54 +22,27 @@
 }
 
 .profileContainer {
+    max-width: 1280px;
     display: grid;
     grid-template-columns: 320px auto;
     margin-left: 380px;
     margin-top: 120px;
     gap: 60px;
 }
-.menu{
-    padding: 0;
-    margin: 0;
-}
-.menuItem{
-    width: 320px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
 
 .link{
     text-decoration: none;
 
 }
-
-.main{
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 1280px;
-    overflow-y: scroll;
-
-}
-
 .scrollableWindow {
-    max-height: calc(100vh - 208px);
+    max-height: calc(100vh - 248px);
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
 
 }
-/*
-.feedInfo{
-    display: flex;
-    gap: 60px;
-    flex-direction: column;
-}
-*/
+
 
 .col{
     display: grid;

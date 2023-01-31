@@ -11,6 +11,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppHeader from "../AppHeader/AppHeader";
 import IngredientPage from "../../pages/IngredientPage";
 import FeedPage from "../../pages/FeedPage";
+import OrderHistoryPage from "../../pages/OrderHistoryPage";
 ;
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
                             Later
                         </ProtectedRoute>
                         <ProtectedRoute path="/profile/orders">
-                            Later
+                            <OrderHistoryPage />
                         </ProtectedRoute>
                         <Route path="/feed/:id" >
                         </Route>

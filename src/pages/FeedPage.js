@@ -5,6 +5,7 @@ import {useEffect, useMemo} from "react";
 import {getIngredientsAction} from "../services/actions/actions";
 import {Link} from "react-router-dom";
 import {WS_CONNECTION_START} from "../services/actions/ws-actions";
+import ScrollableList from "../components/ScrollableList/ScrollableList";
 
 export default function FeedPage() {
     const {data, isLoaded} = useSelector(store => store.ingredients);
@@ -39,7 +40,6 @@ export default function FeedPage() {
         return orders.filter(order => order.status === 'done')
     }, [orders]);
 
-
     /* const order = {
          "ingredients": [
              "60d3b41abdacab0026a733c6",
@@ -59,7 +59,7 @@ export default function FeedPage() {
         return (<p>Try again later</p>)
     }
 
-    return <main className={`${styles.main} p-10`}>
+    return <main className={`${styles.centered} p-10`}>
         <h1 className={'text text_type_main-large mb-5'}>Лента заказов</h1>
         <div className={styles.twoCols}>
             <section className={styles.scrollableWindow}>
