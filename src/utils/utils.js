@@ -20,7 +20,6 @@ export function makeInfoArray(ids, data) {
     let price = 0;
     const dict = {};
     ids.forEach(id => {
-        console.log(price);
         dict[id] = dict[id] ? {...dict[id], cnt: dict[id].cnt + 1} : {...data.find(ing => ing._id === id), cnt: 1};
         price += dict[id].price
     });

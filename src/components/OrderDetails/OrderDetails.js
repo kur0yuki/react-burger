@@ -5,7 +5,7 @@ import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-
 
 const OrderDetails = ({order, info}) => {
     const array = Object.values(info.dict);
-    console.log(array);
+    //console.log(array);
 
     const Element = ({el}) => (
         <article className={`${styles.centeredRow} ${styles.spacedRow} mr-2`}>

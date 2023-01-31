@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 function Ingredient() {
     const {ing} = useSelector(store=> store.currentIngredient)
     return (
-        <>
+        <article className={styles.ingredient}>
             <img src={ing.image_large} alt={ing.name} className='mb-4'/>
             <div className={styles.tableBlock}>
                 <h2 className='text_type_main-medium text mb-8'>{ing.name}</h2>
@@ -27,7 +27,7 @@ function Ingredient() {
                     </tbody>
                 </table>
             </div>
-        </>
+        </article>
     )
 }
 

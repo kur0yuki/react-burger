@@ -43,7 +43,7 @@ const ForgotPasswordPage = () => {
                         extraClass='mb-6'
             />
             <Button htmlType="submit" type="primary" size="medium"
-                    onClick={onClick} extraClass={`mb-20 ${styles.button}`}
+                    extraClass={`mb-20 ${styles.button}`}
             >
                 Восстановить
             </Button>

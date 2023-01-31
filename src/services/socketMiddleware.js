@@ -1,8 +1,7 @@
-import {WS_CONNECTION_START_USER} from "./actions/ws-actions";
 import {getCookie} from "../utils/api";
-import {refreshToken} from "./actions";
+import {REFRESH_TOKEN} from "./actions/auth-actions";
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsUrl, wsActions, tokened, refreshToken) => {
     return store => {
         let socket = null;
 
@@ -12,10 +11,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
             const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
 
             if (type === wsInit) {
-                if (wsInit===WS_CONNECTION_START_USER){
-                    dispatch(refreshToken)
-                    console.log(wsUrl+getCookie('accessToken').split(' ')[1])
-                    socket = new WebSocket(wsUrl+getCookie('accessToken').split(' ')[1]);
+                if (tokened){
+                    const token = getCookie('accessToken').slice(7)
+                 socket = new WebSocket(wsUrl+token);
+                 console.log(wsUrl+token)
                 } else {
                     socket = new WebSocket(wsUrl);
                 }
@@ -28,6 +27,9 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
                 socket.onerror = event => {
                     dispatch({type: onError, payload: event});
+                    if(tokened){
+                        dispatch(refreshToken(()=>({type: wsInit})))
+                    }
                 };
 
                 socket.onmessage = event => {
@@ -40,8 +42,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
                 };
 
                 socket.onclose = event => {
-                    dispatch(refreshToken)
-                    dispatch({type: WS_CONNECTION_START_USER})
+                    socket.close()
                     dispatch({type: onClose, payload: event});
                 };
 

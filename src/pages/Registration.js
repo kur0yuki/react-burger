@@ -59,7 +59,7 @@ const RegistrationPage = () => {
                            extraClass='mb-6'
             />
             <Button htmlType="submit" type="primary" size="medium"
-                    onClick={onClick} extraClass={`mb-20 ${styles.button}`}
+                    extraClass={`mb-20 ${styles.button}`}
             >
                 Зарегистрироваться
             </Button>

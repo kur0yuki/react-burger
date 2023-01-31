@@ -20,7 +20,7 @@ function AppHeader() {
                 </Link>
             </div>
             <div className={styles.logo}>
-                <Logo/>
+                <Link to={'/'}><Logo/></Link>
             </div>
 
             <Link className={`mr-2 p-2 ${styles.link} ${appStyles.row}`} to={'/profile'}>

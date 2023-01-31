@@ -18,7 +18,7 @@ export const wsActions = {
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_MESSAGE
 };
-export const wsActions_user = {
+export const wsActionsUser = {
   wsInit: WS_CONNECTION_START_USER,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS_USER,
