@@ -16,9 +16,9 @@ import OrderDetailsPage from "../../pages/OrderDetailsPage";
 
 function App() {
     const location = useLocation();
-
     return (
         <div className={styles.App}>
+
 
             <AppHeader/>
             <Switch>
@@ -59,6 +59,7 @@ function App() {
                     <FeedPage/>
                 </Route>
             </Switch>
+
 
         </div>
     );
