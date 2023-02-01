@@ -2,7 +2,7 @@ import styles from './styles.module.css'
 import ProfileSidebar from "../components/ProfileSidebar/ProfileSidebar";
 import React, {useEffect, useState} from "react";
 import ScrollableList from "../components/ScrollableList/ScrollableList";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import FeedElement from "../components/FeedElement/FeedElement";
 import {
     WS_CONNECTION_CLOSED_USER,
@@ -18,6 +18,7 @@ export default function OrderHistoryPage() {
     const {orders} = useSelector(store => store.userOrders);
     const dispatch = useDispatch();
     const history = useHistory()
+    const id = useParams()?.id;
     const [modal, setModal] = useState({});
     const onOpen = (order) => ()=> setModal({modal: <OrderDetails order={order} info={makeInfoArray(order.ingredients, data)} />, showModal: true})
 
@@ -28,6 +29,12 @@ export default function OrderHistoryPage() {
         dispatch({type: WS_CONNECTION_START_USER})
         return () => {dispatch({type: WS_CONNECTION_CLOSED_USER})}
     }, []);
+
+    useEffect(()=>{
+        if(id && isLoaded && orders.length>0){
+        onOpen(orders.find(order=> order._id===id))()
+    }
+    },[data, orders])
 
     const OrderElement = ({el}) => (
         <Link key={el._id} to={{pathname:'/profile/orders/' + el._id, state: {from: '/profile/orders'}}}
