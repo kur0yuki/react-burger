@@ -36,6 +36,8 @@ export const socketMiddleware = (wsUrl, wsActions, tokened, refreshToken) => {
                     const {data} = event;
                     const parsedData =  JSON.parse(data)
                     if (parsedData.success===true){
+                        //console.log(data)
+                        console.log(parsedData)
                         dispatch({type: onMessage, payload: parsedData});
                     }
 

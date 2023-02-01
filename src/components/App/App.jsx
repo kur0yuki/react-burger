@@ -58,7 +58,7 @@ function App() {
                     <ProfilePage/>
                 </ProtectedRoute>
                 <Route path="/" exact={true}>
-                    <MainPage/>
+                    <MainPage setModal={setModal}/>
                 </Route>
                 <Route path="/ingredients/:id">
                     {location?.state?.from === '/' && <MainPage setModal={setModal}/>}
@@ -66,7 +66,7 @@ function App() {
                 </Route>
                 <ProtectedRoute path="/profile/orders/:id">
                     {location?.state?.from === '/profile/orders' && <OrderHistoryPage/>}
-                    {location?.state?.from !== '/profile/orders' && <OrderDetailsPage selector={'user'}/>}
+                    {location?.state?.from !== '/profile/orders' && <OrderDetailsPage selector={'userOrders'}/>}
                 </ProtectedRoute>
                 <ProtectedRoute path="/profile/orders">
                     <OrderHistoryPage/>
@@ -80,12 +80,18 @@ function App() {
                 </Route>
             </Switch>
 
-            {background && modal.showModal && <Route path={'/ingredients/:id'}><Modal content={modal.modal}
+            {background && modal.showModal &&
+            <Route path={'/ingredients/:id'}><Modal content={modal.modal}
                                   onClose={onClose}
                                   isVisible={modal.showModal}
                                   title={modal.title}/>
             </Route>}
-
+            {background && modal.showModal &&
+                <Route path={'/'}><Modal content={modal.modal}
+                                  onClose={onClose}
+                                  isVisible={modal.showModal}
+                                  title={modal.title}/>
+            </Route>}
 
         </div>
     );

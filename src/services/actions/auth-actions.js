@@ -66,13 +66,13 @@ export function register(creds) {
 
 }
 
-export function refreshToken(request) {
+export function refreshToken(request,data) {
     return function (dispatch) {
         refreshTokenRequest({token: getCookie("refreshToken")}).then(res => {
             setCookie('accessToken', res.accessToken, {path: '/'});
             setCookie('refreshToken', res.refreshToken, {path: '/'});
             dispatch({type: REFRESH_TOKEN, accessToken: res.accessToken})
-            dispatch(request())
+            dispatch(request(data))
         }).catch(res => dispatch({type: AUTH_ERROR, token: true}))
     }
 }
@@ -97,7 +97,7 @@ export function setUser(data) {
             dispatch({type: SET_USER_INFO, user: res.user})
         }).catch(res => {
             if (res) {
-                dispatch(refreshToken(setUser))
+                dispatch(refreshToken(setUser, data))
             } else {
                 dispatch({type: AUTH_ERROR})
             }

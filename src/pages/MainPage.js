@@ -36,7 +36,10 @@ const MainPage = ({setModal}) => {
 
         <DndProvider backend={HTML5Backend}>
             {isLoaded && <BurgerIngridients openModal={openModal}/>}
-            {isLoaded && <BurgerConstructor openModal={openModal}/>}
+            {isLoaded && <BurgerConstructor openModal={(content) => {
+                history.replace({pathname: '/', state: {from: "/", background: true}});
+                setModal({modal: content, showModal: true})
+            }}/>}
         </DndProvider>
     </div>)
 };

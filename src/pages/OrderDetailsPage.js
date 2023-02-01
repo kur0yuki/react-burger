@@ -39,7 +39,7 @@ const OrderDetailsPage = ({selector}) => {
         }
     }, []);
 
-    const order = useMemo(() => orders.find(order => order._id === order_id), [orders]);
+    const order = useMemo(() => orders?.find(order => order._id === order_id), [orders]);
     const info = useMemo(() => makeInfoArray(order?.ingredients, data), [order, data]);
 
 

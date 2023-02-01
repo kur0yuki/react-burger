@@ -29,13 +29,20 @@ export function makeInfoArray(ids, data) {
 }
 
 export function makeIconsArray(ids, data) {
+    //console.log(data)
     let price = 0;
     const icons = ids.map(id => {
+        if (id===null) return null
+        //not sure как сюда запихнули null но да сойдет
         const ing = data.find(ing => ing._id === id);
-        //console.log(ing.image_mobile)
-        price += ing.price;
+        //if (!ing){
+            //console.log(ids)
+            //console.log(id)
+        //}
+        price += ing.price?ing.price:0;
         return ing.image_mobile
     });
     //console.log(icons)
+    icons.filter(icon => icon!==null)
     return {icons, price}
 }
