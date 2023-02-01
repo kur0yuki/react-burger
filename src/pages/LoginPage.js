@@ -4,7 +4,6 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {signIn} from "../services/actions";
-import {getCookie} from "../utils/api";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('')
@@ -19,19 +18,6 @@ const LoginPage = () => {
         e.preventDefault()
         dispatch(signIn({email, password}))
     }
-    const history = useHistory();
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
-
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-    },[hasToken, user])
-
 
     return (<div className={`${styles.formWrapper} ${styles.centered} mt-30`}>
         <h1 className='text_color_primary text text_type_main-medium mb-6 pt-15'>Вход</h1>

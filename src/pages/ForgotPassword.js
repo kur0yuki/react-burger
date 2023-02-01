@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {resetPassword} from "../services/actions";
-import {getCookie} from "../utils/api";
 
 
 const ForgotPasswordPage = () => {
@@ -15,18 +14,6 @@ const ForgotPasswordPage = () => {
     };
     const dispatch = useDispatch();
     const history = useHistory()
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-            //return (<Redirect to={"/"} />)
-            //console.log({email, password})
-    },[hasToken, user])
 
     const onClick = () => {
         dispatch(resetPassword({email}))

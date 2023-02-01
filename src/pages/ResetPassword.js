@@ -17,19 +17,7 @@ const ResetPasswordPage = () => {
     const dispatch = useDispatch();
     const history = useHistory()
     const location = useLocation()
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
 
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-            //return (<Redirect to={"/"} />)
-            //console.log({email, password})
-    },[hasToken, user])
 
     const onClick = () => {
         dispatch(resetPasswordSave({password, token}));

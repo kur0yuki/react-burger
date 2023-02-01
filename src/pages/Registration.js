@@ -13,20 +13,6 @@ const RegistrationPage = () => {
     const [name, setName] = useState('');
 
     const history = useHistory()
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
-
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-            //return (<Redirect to={"/"} />)
-            //console.log({email, password})
-    },[hasToken, user])
-
 
     const onChange = f => e => {
         f(e.target.value)

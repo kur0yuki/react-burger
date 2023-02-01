@@ -1,24 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import styles from './styles.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {setUser, signOut} from "../services/actions";
+import {getUser, setUser, signOut} from "../services/actions";
 import ProfileSidebar from "../components/ProfileSidebar/ProfileSidebar";
 
 const ProfilePage = () => {
     const user = useSelector(store => store.user);
-    const location = useLocation();
-    const history = useHistory();
 
-    const [name, setName] = useState(user && user.name ? user.name : '');
-    const [email, setEmail] = useState(user && user.email ? user.email : '');
+    const [name, setName] = useState(user?.name|| '');
+    const [email, setEmail] = useState(user?.email ||'');
     const [password, setPassword] = useState('');
     const [changed, setChanged] = useState(false);
 
     const onChange = f => e => {
         f(e.target.value);
-        setChanged(true)
+        if(e.target.name==='' || e.target.name!==user[name]) setChanged(true)
     };
     const dispatch = useDispatch();
     const onSubmit = (e) => {
@@ -33,10 +31,18 @@ const ProfilePage = () => {
         setChanged(false)
     };
 
-    const onLogout = () => {
-        dispatch(signOut());
-        history.push('/login')
-    };
+    useEffect(()=>{
+        if(!user?.name){
+            dispatch(getUser())
+        }
+    },[])
+    useEffect(()=>{
+        if(name==='' && user?.name){
+            setName(user.name)
+            setEmail(user.email)
+            setChanged(false)
+        }
+    },[user])
 
     return (
         <div className={styles.profileContainer}>
@@ -46,6 +52,7 @@ const ProfilePage = () => {
                     <Input type={'text'}
                            placeholder={'Name'}
                            value={name}
+                           name={'name'}
                            onChange={onChange(setName)}
                            extraClass='mb-6'
                     />

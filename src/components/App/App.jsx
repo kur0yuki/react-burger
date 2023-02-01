@@ -42,18 +42,18 @@ function App() {
         <div className={styles.App}>
             <AppHeader/>
             <Switch>
-                <Route path="/login">
+                <ProtectedRoute onlyForAuth={false} path="/login">
                     <LoginPage/>
-                </Route>
-                <Route path="/register">
+                </ProtectedRoute>
+                <ProtectedRoute onlyForAuth={false} path="/register">
                     <RegistrationPage/>
-                </Route>
-                <Route path="/forgot-password">
+                </ProtectedRoute>
+                <ProtectedRoute onlyForAuth={false} path="/forgot-password">
                     <ForgotPasswordPage/>
-                </Route>
-                <Route path="/reset-password">
+                </ProtectedRoute>
+                <ProtectedRoute onlyForAuth={false} path="/reset-password">
                     <ResetPasswordPage/>
-                </Route>
+                </ProtectedRoute>
                 <ProtectedRoute path="/profile" exact={true}>
                     <ProfilePage/>
                 </ProtectedRoute>
