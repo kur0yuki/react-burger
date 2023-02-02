@@ -7,7 +7,7 @@ function ScrollableList({array, Element, maxHeight}) {
 
     return (
         <section  ref={ref} className={styles.scrollableList} style={{maxHeight: maxHeight?maxHeight:height}} >
-            {array.map(el => (<Element key={el._id} el={el} />))}
+            {array.map((el, idx) => (<Element key={el._id||idx} el={el} />))}
         </section>
     )
 }

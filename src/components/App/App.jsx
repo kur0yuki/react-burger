@@ -19,7 +19,7 @@ import Modal from "../Modal/Modal";
 
 function App() {
     const location = useLocation();
-    const history = useHistory()
+    const history = useHistory();
 
     const dispatch = useDispatch();
     const background = location?.state?.background;
@@ -27,16 +27,21 @@ function App() {
     const [modal, setModal] = useState({
         showModal: false,
     });
-        function onClose() {
+
+    function onClose() {
         setModal({
             showModal: false,
-        })
+        });
         history.goBack()
     }
 
     useEffect(() => {
         dispatch(getIngredientsAction())
     }, [dispatch]);
+
+    useEffect(() => {
+        console.log(`on ${location.pathname}\nfrom ${location?.state?.from}`)
+    }, [location]);
 
     return (
         <div className={styles.App}>
@@ -82,15 +87,15 @@ function App() {
 
             {background && modal.showModal &&
             <Route path={'/ingredients/:id'}><Modal content={modal.modal}
-                                  onClose={onClose}
-                                  isVisible={modal.showModal}
-                                  title={modal.title}/>
+                                                    onClose={onClose}
+                                                    isVisible={modal.showModal}
+                                                    title={modal.title}/>
             </Route>}
             {background && modal.showModal &&
-                <Route path={'/'}><Modal content={modal.modal}
-                                  onClose={onClose}
-                                  isVisible={modal.showModal}
-                                  title={modal.title}/>
+            <Route path={'/'}><Modal content={modal.modal}
+                                     onClose={onClose}
+                                     isVisible={modal.showModal}
+                                     title={modal.title}/>
             </Route>}
 
         </div>

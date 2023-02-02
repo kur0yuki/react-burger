@@ -14,7 +14,7 @@ export const socketMiddleware = (wsUrl, wsActions, tokened, refreshToken) => {
                 if (tokened){
                     const token = getCookie('accessToken').slice(7)
                  socket = new WebSocket(wsUrl+token);
-                 console.log(wsUrl+token)
+                 //console.log(wsUrl+token)
                 } else {
                     socket = new WebSocket(wsUrl);
                 }
@@ -37,7 +37,7 @@ export const socketMiddleware = (wsUrl, wsActions, tokened, refreshToken) => {
                     const parsedData =  JSON.parse(data)
                     if (parsedData.success===true){
                         //console.log(data)
-                        console.log(parsedData)
+                        //console.log(parsedData)
                         dispatch({type: onMessage, payload: parsedData});
                     }
 
