@@ -30,6 +30,7 @@ const OrderDetailsPage = ({selector}) => {
         } else {
             dispatch({type: WS_CONNECTION_START})
         }
+        console.log('OrderDetailsPage')
         return () => {
             if (selector === 'userOrders') {
                 dispatch({type: WS_CONNECTION_CLOSED_USER})
@@ -42,6 +43,9 @@ const OrderDetailsPage = ({selector}) => {
     const order = useMemo(() => orders?.find(order => order._id === order_id), [orders]);
     const info = useMemo(() => makeInfoArray(order?.ingredients, data), [order, data]);
 
+    useEffect(()=>{
+        console.log(isLoaded, connected)
+    },[isLoaded, connected])
 
     return (
         <main className={styles.centered + ' mt-30'}>

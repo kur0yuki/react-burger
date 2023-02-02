@@ -26,6 +26,7 @@ export default function OrderHistoryPage() {
         // if (data.length === 0) {
         //     dispatch(getIngredientsAction())
         // }
+        console.log('OrderHistoryPage')
         dispatch({type: WS_CONNECTION_START_USER})
         return () => {dispatch({type: WS_CONNECTION_CLOSED_USER})}
     }, []);
@@ -34,6 +35,7 @@ export default function OrderHistoryPage() {
         if(id && isLoaded && orders.length>0){
         onOpen(orders.find(order=> order._id===id))()
     }
+        console.log(id, isLoaded, orders.length)
     },[data, orders])
 
     const OrderElement = ({el}) => (
