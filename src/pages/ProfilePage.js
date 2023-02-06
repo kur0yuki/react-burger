@@ -1,23 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import styles from './styles.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {setUser, signOut} from "../services/actions";
+import {getUser, setUser, signOut} from "../services/actions";
+import ProfileSidebar from "../components/ProfileSidebar/ProfileSidebar";
 
 const ProfilePage = () => {
     const user = useSelector(store => store.user);
-    const location = useLocation();
-    const history = useHistory();
 
-    const [name, setName] = useState(user && user.name ? user.name : '');
-    const [email, setEmail] = useState(user && user.email ? user.email : '');
+    const [name, setName] = useState(user?.name|| '');
+    const [email, setEmail] = useState(user?.email ||'');
     const [password, setPassword] = useState('');
     const [changed, setChanged] = useState(false);
 
     const onChange = f => e => {
         f(e.target.value);
-        setChanged(true)
+        if(e.target.name==='' || e.target.name!==user[name]) setChanged(true)
     };
     const dispatch = useDispatch();
     const onSubmit = (e) => {
@@ -32,39 +31,28 @@ const ProfilePage = () => {
         setChanged(false)
     };
 
-    const onLogout = () => {
-        dispatch(signOut());
-        history.push('/login')
-    };
+    useEffect(()=>{
+        if(!user?.name){
+            dispatch(getUser())
+        }
+    },[])
+    useEffect(()=>{
+        if(name==='' && user?.name){
+            setName(user.name)
+            setEmail(user.email)
+            setChanged(false)
+        }
+    },[user])
 
     return (
         <div className={styles.profileContainer}>
-            <nav>
-                <ul className={styles.menu}>
-                    <li className={`${styles.menuItem} `}>
-                        <Link to={"/profile"}
-                              className={`${styles.link} text text_type_main-medium` + (location.pathname !== '/profile' ? " text_color_inactive" : " text_color_primary")}>
-                            <p className={""}> Профиль </p>
-                        </Link>
-                    </li>
-                    <li className={`${styles.menuItem}`}>
-                        <Link to={"/profile/orders"}
-                              className={`${styles.link} text text_type_main-medium` + (location.pathname !== '/profile/orders' ? " text_color_inactive" : " text_color_primary")}>История
-                            заказов</Link>
-                    </li>
-                    <li className={`${styles.menuItem}`} onClick={onLogout}>
-                        <Link to={"/profile/logout"}
-                              className={`${styles.link} text text_type_main-medium` + (location.pathname !== '/profile/logout' ? " text_color_inactive" : " text_color_primary")}>Выход</Link>
-                    </li>
-                </ul>
-                <p className='mt-10 text text_color_inactive'>В этом разделе вы можете
-                    изменить свои персональные данные</p>
-            </nav>
-            <section className={styles.main}>
+            <ProfileSidebar/>
+            <section>
                 <form onSubmit={onSubmit} onReset={onReset}>
                     <Input type={'text'}
                            placeholder={'Name'}
                            value={name}
+                           name={'name'}
                            onChange={onChange(setName)}
                            extraClass='mb-6'
                     />

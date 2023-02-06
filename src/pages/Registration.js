@@ -13,20 +13,6 @@ const RegistrationPage = () => {
     const [name, setName] = useState('');
 
     const history = useHistory()
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
-
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-            //return (<Redirect to={"/"} />)
-            //console.log({email, password})
-    },[hasToken, user])
-
 
     const onChange = f => e => {
         f(e.target.value)
@@ -40,8 +26,8 @@ const RegistrationPage = () => {
     };
 
     return (
-        <div className={styles.centered}>
-            <h1 className='text_color_primary text text_type_main-medium mb-6'>Регистрация</h1>
+        <div className={`${styles.formWrapper} ${styles.centered} mt-30`}>
+            <h1 className='text_color_primary text text_type_main-medium mb-6 mt-15'>Регистрация</h1>
             <form onSubmit={onClick}>
             <Input type={'text'}
                    placeholder={'Name'}
@@ -59,7 +45,7 @@ const RegistrationPage = () => {
                            extraClass='mb-6'
             />
             <Button htmlType="submit" type="primary" size="medium"
-                    onClick={onClick} extraClass={`mb-20 ${styles.button}`}
+                    extraClass={`mb-20 ${styles.button}`}
             >
                 Зарегистрироваться
             </Button>

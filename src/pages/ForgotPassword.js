@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {resetPassword} from "../services/actions";
-import {getCookie} from "../utils/api";
 
 
 const ForgotPasswordPage = () => {
@@ -15,18 +14,6 @@ const ForgotPasswordPage = () => {
     };
     const dispatch = useDispatch();
     const history = useHistory()
-    const user=useSelector(store=> store.user)
-    const hasToken = getCookie('accessToken')
-
-    useEffect(()=>{
-        if (hasToken || user?.name) {
-            const redirectTo=sessionStorage.getItem('location')
-            sessionStorage.removeItem('location')
-                history.replace(redirectTo?redirectTo:'/')
-            }
-            //return (<Redirect to={"/"} />)
-            //console.log({email, password})
-    },[hasToken, user])
 
     const onClick = () => {
         dispatch(resetPassword({email}))
@@ -34,8 +21,8 @@ const ForgotPasswordPage = () => {
     };
 
     return (
-        <div className={styles.centered}>
-            <h1 className='text_color_primary text text_type_main-medium mb-6'>Восстановление пароля</h1>
+        <div className={`${styles.formWrapper} ${styles.centered} mt-30`}>
+            <h1 className='text_color_primary text text_type_main-medium mb-6 pt-15'>Восстановление пароля</h1>
             <form onSubmit={onClick}>
             <EmailInput value={email}
                         onChange={onChange(setEmail)}
@@ -43,7 +30,7 @@ const ForgotPasswordPage = () => {
                         extraClass='mb-6'
             />
             <Button htmlType="submit" type="primary" size="medium"
-                    onClick={onClick} extraClass={`mb-20 ${styles.button}`}
+                    extraClass={`mb-20 ${styles.button}`}
             >
                 Восстановить
             </Button>

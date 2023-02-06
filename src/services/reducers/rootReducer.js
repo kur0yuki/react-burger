@@ -14,6 +14,13 @@ import {
     SET_CURRENT_INGREDIENT
 } from "../actions/actions";
 import {AUTH_ERROR, GET_USER_INFO, REFRESH_TOKEN, SET_USER_INFO, SIGN_IN, SIGN_OUT} from "../actions/auth-actions";
+import {
+    WS_CONNECTION_CLOSED, WS_CONNECTION_CLOSED_USER,
+    WS_CONNECTION_ERROR, WS_CONNECTION_ERROR_USER,
+    WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_SUCCESS_USER,
+    WS_GET_MESSAGE, WS_GET_MESSAGE_USER
+} from "../actions/ws-actions";
 
 
 const burgerReducer = (state = {bun: null, main: []}, action) => {
@@ -133,30 +140,59 @@ const currentOrder = (state = {}, action) => {
 };
 
 const userReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
         case SIGN_IN:
         case GET_USER_INFO:
-            return action.user
+            return action.user;
         case AUTH_ERROR:
         case SIGN_OUT:
-            return null
+            return null;
         default:
             return state
     }
-}
+};
 
-const tokenReducer = (state='', action) => {
-    switch(action.type){
+const tokenReducer = (state = '', action) => {
+    switch (action.type) {
         case SET_USER_INFO:
         case GET_USER_INFO:
         case AUTH_ERROR:
-            return false
+            return false;
         case REFRESH_TOKEN:
-            return true
+            return true;
         default:
             return state
     }
-}
+};
+
+const wsReducerAllFeed = (state = {connected: false, orders:[]}, action) => {
+    switch (action.type) {
+        case WS_CONNECTION_SUCCESS:
+            return {...state, connected: true};
+        case WS_CONNECTION_ERROR:
+        case WS_CONNECTION_CLOSED:
+            return {...state, connected: false};
+        case WS_GET_MESSAGE:
+            return {...state, orders:action.payload.orders, total: action.payload.total, totalToday: action.payload.totalToday}
+        default:
+            return state
+
+    }
+};
+const wsReducerUser= (state = {connected: false, orders:[]}, action) => {
+    switch (action.type) {
+        case WS_CONNECTION_SUCCESS_USER:
+            return {...state, connected: true};
+        case WS_CONNECTION_ERROR_USER:
+        case WS_CONNECTION_CLOSED_USER:
+            return {...state, connected: false};
+        case WS_GET_MESSAGE_USER:
+            return {...state, orders:action.payload.orders}
+        default:
+            return state
+
+    }
+};
 
 export const rootReducer = combineReducers({
     contents: burgerReducer,
@@ -164,5 +200,7 @@ export const rootReducer = combineReducers({
     currentIngredient: currentIngredient,
     currentOrder: currentOrder,
     user: userReducer,
-    tokenRefresh: tokenReducer
+    tokenRefresh: tokenReducer,
+    feed: wsReducerAllFeed,
+    userOrders: wsReducerUser
 });

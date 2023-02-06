@@ -1,4 +1,5 @@
 import {getIngredients, getOrderDetails} from "../../utils/api";
+import {refreshToken} from "./auth-actions";
 
 
 export const ADD = 'ADD';
@@ -95,10 +96,14 @@ export function makeOrderAction(data) {
             })
         }).catch(
             err => {
-                dispatch({
-                    type: GET_ORDER_ID,
-                    orderId: 'ERROR'
-                })
+                if (err){
+                    dispatch(refreshToken(makeOrderAction, data))
+                } else {
+                    dispatch({
+                        type: GET_ORDER_ID,
+                        orderId: 'ERROR'
+                    })
+                }
             }
         );
         dispatch({type: CLEAR_ORDER})

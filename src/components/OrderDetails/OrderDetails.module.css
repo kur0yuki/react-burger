@@ -1,0 +1,27 @@
+.OrderDetails{
+    width: 640px;
+    z-index: 100;
+    margin: 0 auto;
+}
+
+.textCentered{
+    text-align: center;
+}
+
+.spacedRow{
+    justify-content: space-between;
+}
+
+.centeredRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.image{
+    border-radius: 100%;
+    border: #4C4CFF solid 1px;
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    object-fit: cover;
+}
