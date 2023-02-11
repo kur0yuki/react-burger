@@ -1,0 +1,107 @@
+import React, {FC, ReactNode, useEffect, useMemo, useRef, useState} from 'react';
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './BurgerIngridients.module.css'
+import IngredientCard from "../IngredientCard/IngredientCard";
+import {useSelector} from "../../services/hooks";
+import {TIngredientData} from "../../utils/types";
+
+const BurgerIngridients: FC<{ openModal: (content: ReactNode) => void }> = (props) => {
+    const data = useSelector(store=>store.ingredients.data)
+    const tabBunRef = useRef<HTMLDivElement | null>(null);
+    const tabSauceRef = useRef<HTMLDivElement | null>(null);
+    const tabMainRef = useRef<HTMLDivElement | null>(null);
+    const openModal = props.openModal;
+
+    const [tabs, setTab] = useState("bun");
+
+    const options = useMemo(() => {
+        return {
+            root: document.querySelector(`.${styles.ingridientsWindow}`),
+            threshold: [0, 0.5, 1]
+        }
+    }, []);
+
+
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(callback, options);
+
+        if (!tabBunRef.current || !tabSauceRef.current || !tabMainRef.current) return;
+
+        observer.observe(tabBunRef.current);
+        observer.observe(tabSauceRef.current);
+        observer.observe(tabMainRef.current)
+    }, [options]);
+
+    function callback(entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
+        //console.log(entries)
+        const entry = entries.find(entry => entry.isIntersecting);
+        //console.log(entry)
+        if (entry && entry.target) {
+            switch (entry.target) {
+                case tabBunRef.current:
+                    setTab("bun");
+                    break;
+                case tabMainRef.current:
+                    setTab("main");
+                    break;
+                case tabSauceRef.current:
+                    setTab("sauce");
+                    break;
+                default:
+                    //setTab("bun");
+                    break;
+            }
+        }
+    }
+
+
+    function onClick(ref: typeof tabBunRef) {
+        return () => {
+            ref?.current?.scrollIntoView({behavior: "smooth"})
+        }
+    }
+
+    return (<div className={`${styles.BurgerIngridients} pt-10`}>
+        <h2 className='text text_type_main-large'>Соберите бургер</h2>
+        <div className={`${styles.tabs} mb-10 mt-5`}>
+            <Tab active={tabs === "bun"}
+                 value={"0"}
+                 onClick={onClick(tabBunRef)}><p className='text text_type_main-default'>Булки</p></Tab>
+            <Tab active={tabs === "sauce"}
+                 value={"0"}
+                 onClick={onClick(tabSauceRef)}><p className='text text_type_main-default'>Соусы</p></Tab>
+            <Tab active={tabs === "main"}
+                 value={"0"}
+                 onClick={onClick(tabMainRef)}><p className='text text_type_main-default'>Котлетки</p></Tab>
+        </div>
+        <div className={styles.ingridientsWindow}>
+            <div ref={tabBunRef} className={styles.typeSection}>
+            <h2  className={`${styles.type} mb-6 text text_type_main-medium`}>Булки</h2>
+                {data.filter((thing: TIngredientData) => thing.type === "bun").map((bun: TIngredientData) =>
+                (<IngredientCard ing={bun} key={bun._id}
+                                 openModal={props.openModal}
+                />)
+            )}
+            </div>
+            <div ref={tabSauceRef} className={styles.typeSection}>
+            <h2  className={`${styles.type} mb-6 text text_type_main-medium`}>Соусы</h2>
+                {data.filter((thing: TIngredientData) => thing.type === "sauce").map((sauce: TIngredientData) =>
+                (<IngredientCard ing={sauce} key={sauce._id}
+                                 openModal={props.openModal}
+                />))
+            }
+            </div>
+            <div ref={tabMainRef} className={styles.typeSection}>
+            <h2 ref={tabMainRef} className={`${styles.type} mb-6 text text_type_main-medium`}>Котлетка</h2>
+                {data.filter((thing: TIngredientData) => thing.type === "main").map((main: TIngredientData) =>
+                (<IngredientCard ing={main} key={main._id}
+                                 openModal={openModal}
+                />))
+            }
+            </div>
+        </div>
+    </div>)
+}
+
+export default BurgerIngridients;
