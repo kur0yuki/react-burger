@@ -7,7 +7,7 @@ import {WS_CONNECTION_CLOSED, WS_CONNECTION_START} from "../services/constants";
 import Modal from "../components/Modal/Modal";
 import {makeIconsArray, makeInfoArray, onClose} from "../utils/utils";
 import OrderDetails from "../components/OrderDetails/OrderDetails";
-import {TModal} from "../utils/types";
+import {TModal, TOrder} from "../utils/types";
 
 const FeedPage: FC = () => {
     const {data, isLoaded} = useSelector(store => store.ingredients);
@@ -17,7 +17,7 @@ const FeedPage: FC = () => {
     const location = useLocation();
     const [modal, setModal] = useState<TModal>({showModal: false});
 
-    const onOpen = (order: any) => () => setModal({
+    const onOpen = (order: TOrder) => () => setModal({
         modal: <OrderDetails order={order} info={makeInfoArray(order.ingredients, data)}/>,
         showModal: true
     });
@@ -38,7 +38,8 @@ const FeedPage: FC = () => {
     useEffect(() => {
         const orderChosen = location.pathname.split('/');
         if (orders.length > 0 && orderChosen.length === 3) {
-            onOpen(orders.find(order => order._id === orderChosen[2]))()
+            const order = orders.find(order => order._id === orderChosen[2]);
+            if(order) {onOpen(order)}
         }
     }, [location, orders]);
 

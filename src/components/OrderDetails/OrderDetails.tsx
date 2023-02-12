@@ -37,7 +37,7 @@ const OrderDetails: FC<TOrderDetail> = ({order, info}) => {
             <h2 className={'text mb-3 text_type_main-medium'}>{order.name}</h2>
             <p className={'text mb-15 text_type_main-default'}>{order.status}</p>
             <p className={'text mb-6 text_type_main-medium'}>Состав:</p>
-            <ScrollableList array={array} Element={Element} maxHeight={312}/> /*TODO check*/
+            <ScrollableList array={array} Element={Element} maxHeight={312}/>
             <div className={styles.centeredRow + ' pt-10 ' + styles.spacedRow}>
                 <p className={'text text_type_main-default text_color_inactive'}>
                     <FormattedDate date={new Date(order.updatedAt)}/>

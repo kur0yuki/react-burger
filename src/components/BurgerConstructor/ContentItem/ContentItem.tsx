@@ -2,7 +2,7 @@ import styles from "../BurgerConstructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FunctionComponent, useRef} from "react";
 import {DropTargetMonitor, useDrag, useDrop} from "react-dnd";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../../services/hooks";
 import {addAtAction, removeAction, reorderAction} from "../../../services/actions/actions";
 import {v4 as uuid} from "uuid";
 import {TIngredientContent} from "../../../utils/types";

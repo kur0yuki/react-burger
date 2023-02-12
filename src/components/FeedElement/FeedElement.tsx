@@ -18,7 +18,7 @@ const FeedElement: FC<{ order: TOrder; info: { icons: Array<string>; price: numb
         </div>
         <h2 className={'text text_type_main-medium'}>{order.name}</h2>
         <div className={styles.row}>
-            <div className={styles.icons}>{icons.map((icon: string, idx: number) => {
+            <div className={styles.icons}>{icons.map((icon, idx) => {
                 return <img src={icon} alt={icon} className={styles.icon} key={idx}
                             style={{left: -24 - 96 * idx, zIndex: maxZIdx - idx}}/>
             })}</div>

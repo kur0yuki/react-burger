@@ -5,7 +5,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import PropTypes from "prop-types";
 import Ingredient from "../Ingredient/Ingrefient";
 import {useDrag} from "react-dnd";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../services/hooks";
 import {SET_CURRENT_INGREDIENT} from "../../services/constants";
 import {TIngredientData, TOpenModal} from "../../utils/types";
 
