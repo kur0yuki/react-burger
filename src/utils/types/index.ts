@@ -1,5 +1,4 @@
-import {ReactNode, SetStateAction, useState} from "react";
-import {Dispatch} from "react";
+import {Dispatch, ReactNode, SetStateAction} from "react";
 
 export type TIngType = 'bun' | 'main' | 'sauce'
 
@@ -83,10 +82,11 @@ export type TModal = {
     showModal: boolean
     title?: string
 }
-export type TSetModal= Dispatch<SetStateAction<TModal>>
+export type TSetModal = Dispatch<SetStateAction<TModal>>
+export type TOpenModal = (content: ReactNode, title?: string, id?: string) => void
 
 
-export type IResponse<TKey extends string='', TResponseBody={}> ={
+export type IResponse<TKey extends string = '', TResponseBody = {}> = {
     [key in TKey]: TResponseBody
 } & {
     success: boolean

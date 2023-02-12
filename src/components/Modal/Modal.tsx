@@ -8,7 +8,7 @@ type Tprops = {
     onClose: () => void;
     isVisible: boolean;
     title: string;
-    content: ReactNode //TODO check
+    content: ReactNode
 }
 const Modal = (props: Tprops) => {
     const root = document.getElementById("modal-root");
@@ -26,7 +26,7 @@ const Modal = (props: Tprops) => {
         if (props.isVisible) {
             document.addEventListener('keydown', handleEsc)
         }
-        return ()=> {
+        return () => {
             document.removeEventListener('keydown', handleEsc)
         }
     }, [props.isVisible, handleEsc]);
@@ -45,6 +45,6 @@ const Modal = (props: Tprops) => {
         </div>),
         root
     );
-}
+};
 
 export default Modal

@@ -14,10 +14,10 @@ const ScrollableList: FC<TListProps> = ({array, Element, maxHeight}) => {
     }
 
     return (
-        <section  ref={ref} className={styles.scrollableList} style={{maxHeight: maxHeight?maxHeight:height}} >
+        <section ref={ref} className={styles.scrollableList} style={{maxHeight: maxHeight ? maxHeight : height}}>
             {array.map((el, idx: number) => (<Element key={el._id || idx} el={el}/>))}
         </section>
     )
-}
+};
 
 export default ScrollableList

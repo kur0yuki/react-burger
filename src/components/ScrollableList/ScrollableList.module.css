@@ -1,5 +1,5 @@
-.scrollableList{
-   /* max-height: calc(100vh - 208px);*/
+.scrollableList {
+    /* max-height: calc(100vh - 208px);*/
     overflow-y: auto;
     display: flex;
     flex-direction: column;

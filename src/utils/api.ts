@@ -21,7 +21,7 @@ const checkResp = (resp: Response) => {
 };
 const checkJson = (resp: IResponse<any>) => {
     if (!resp.success) {
-        if (resp.message==='jwt expired'){
+        if (resp.message === 'jwt expired') {
             return Promise.reject(true)
         }
         return Promise.reject(resp.status)
@@ -56,14 +56,14 @@ const makeRequest: TMakeRequest = (url, token, data, method) => {
             body: JSON.stringify(data)
         }).then(checkResp).then(checkJson)
     }
-}
+};
 
 export function getIngredients() {
     return makeRequest(ingUrl, false)
 }
 
 export function getOrderDetails(body: ReadonlyArray<string>) {
-    const data = {ingredients: body}
+    const data = {ingredients: body};
     return makeRequest(orderUrl, true, data)
 }
 

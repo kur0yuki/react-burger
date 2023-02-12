@@ -3,9 +3,9 @@ import {useSelector} from "../../services/hooks";
 import {FC} from "react";
 
 const Order: FC = () => {
-    const {orderId} = useSelector(store=> ({
+    const {orderId} = useSelector(store => ({
         orderId: store?.currentOrder?.orderId
-    }))
+    }));
     return (
         <>
             <p className='text text_type_digits-large mt-4 mb-8'>{orderId}</p>
@@ -16,6 +16,6 @@ const Order: FC = () => {
                 станции</p>
         </>
     )
-}
+};
 
 export default Order;

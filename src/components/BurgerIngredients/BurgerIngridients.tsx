@@ -3,10 +3,10 @@ import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngridients.module.css'
 import IngredientCard from "../IngredientCard/IngredientCard";
 import {useSelector} from "../../services/hooks";
-import {TIngredientData} from "../../utils/types";
+import {TIngredientData, TOpenModal} from "../../utils/types";
 
-const BurgerIngridients: FC<{ openModal: (content: ReactNode) => void }> = (props) => {
-    const data = useSelector(store=>store.ingredients.data)
+const BurgerIngridients: FC<{ openModal: TOpenModal }> = (props) => {
+    const data = useSelector(store => store.ingredients.data);
     const tabBunRef = useRef<HTMLDivElement | null>(null);
     const tabSauceRef = useRef<HTMLDivElement | null>(null);
     const tabMainRef = useRef<HTMLDivElement | null>(null);
@@ -20,7 +20,6 @@ const BurgerIngridients: FC<{ openModal: (content: ReactNode) => void }> = (prop
             threshold: [0, 0.5, 1]
         }
     }, []);
-
 
 
     useEffect(() => {
@@ -77,31 +76,31 @@ const BurgerIngridients: FC<{ openModal: (content: ReactNode) => void }> = (prop
         </div>
         <div className={styles.ingridientsWindow}>
             <div ref={tabBunRef} className={styles.typeSection}>
-            <h2  className={`${styles.type} mb-6 text text_type_main-medium`}>Булки</h2>
-                {data.filter((thing: TIngredientData) => thing.type === "bun").map((bun: TIngredientData) =>
-                (<IngredientCard ing={bun} key={bun._id}
-                                 openModal={props.openModal}
-                />)
-            )}
+                <h2 className={`${styles.type} mb-6 text text_type_main-medium`}>Булки</h2>
+                {data.filter((thing) => thing.type === "bun").map((bun) =>
+                    (<IngredientCard ing={bun} key={bun._id}
+                                     openModal={props.openModal}
+                    />)
+                )}
             </div>
             <div ref={tabSauceRef} className={styles.typeSection}>
-            <h2  className={`${styles.type} mb-6 text text_type_main-medium`}>Соусы</h2>
-                {data.filter((thing: TIngredientData) => thing.type === "sauce").map((sauce: TIngredientData) =>
-                (<IngredientCard ing={sauce} key={sauce._id}
-                                 openModal={props.openModal}
-                />))
-            }
+                <h2 className={`${styles.type} mb-6 text text_type_main-medium`}>Соусы</h2>
+                {data.filter((thing) => thing.type === "sauce").map((sauce) =>
+                    (<IngredientCard ing={sauce} key={sauce._id}
+                                     openModal={props.openModal}
+                    />))
+                }
             </div>
             <div ref={tabMainRef} className={styles.typeSection}>
-            <h2 ref={tabMainRef} className={`${styles.type} mb-6 text text_type_main-medium`}>Котлетка</h2>
-                {data.filter((thing: TIngredientData) => thing.type === "main").map((main: TIngredientData) =>
-                (<IngredientCard ing={main} key={main._id}
-                                 openModal={openModal}
-                />))
-            }
+                <h2 ref={tabMainRef} className={`${styles.type} mb-6 text text_type_main-medium`}>Котлетка</h2>
+                {data.filter((thing) => thing.type === "main").map((main) =>
+                    (<IngredientCard ing={main} key={main._id}
+                                     openModal={openModal}
+                    />))
+                }
             </div>
         </div>
-    </div>)
-}
+    </div>);
+};
 
 export default BurgerIngridients;

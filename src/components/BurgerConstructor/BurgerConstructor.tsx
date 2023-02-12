@@ -11,11 +11,11 @@ import {addAction, addBunAction, makeOrderAction, reorderAction} from "../../ser
 import {v4 as uuid} from 'uuid';
 import {getCookie} from "../../utils/api";
 import {useHistory} from "react-router";
-import {TIngredientContent, TIngredientData, TIngredientRaw} from "../../utils/types";
+import {TIngredientContent, TIngredientData, TIngredientRaw, TOpenModal} from "../../utils/types";
 
 
-const BurgerConstructor: FC<{ openModal: (content: ReactNode) => void }> = (props) => {
-    const {bun, mains} = useSelector<{bun: TIngredientData|null; mains: Array<TIngredientContent>}>(store => ({
+const BurgerConstructor: FC<{ openModal: TOpenModal}> = (props) => {
+    const {bun, mains} = useSelector<{ bun: TIngredientData | null; mains: Array<TIngredientContent> }>(store => ({
         bun: store.contents.bun,
         mains: store.contents.main,
     }));
@@ -47,10 +47,10 @@ const BurgerConstructor: FC<{ openModal: (content: ReactNode) => void }> = (prop
         return ((bun ? bun.price : 0) * 2 + mains.reduce((price: number, item: TIngredientRaw) => price + item.price, 0))
     }, [bun, mains]);
 
-    const getIngArray = ():Array<string> => {
-        if (!bun) return []
+    const getIngArray = (): Array<string> => {
+        if (!bun) return [];
         return [bun._id].concat(mains.map((ing: TIngredientRaw) => ing._id)).concat(bun?._id)
-    }
+    };
 
     function onOrder() {
         const hasToken = getCookie('accessToken');
@@ -93,7 +93,7 @@ const BurgerConstructor: FC<{ openModal: (content: ReactNode) => void }> = (prop
             </Button>
         </div>
     </section>)
-}
+};
 
 BurgerConstructor.propTypes = {
     openModal: PropTypes.func.isRequired

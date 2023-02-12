@@ -12,7 +12,7 @@ const ProtectedRoute: FC<TProps> = ({children, onlyForAuth = true, ...rest}) => 
     const hasToken = getCookie('accessToken');
 
     const location = useLocation<{ from?: string }>();
-    const user=useSelector(store=> store.user)
+    const user = useSelector(store => store.user);
 
 
     if (!hasToken && onlyForAuth) {

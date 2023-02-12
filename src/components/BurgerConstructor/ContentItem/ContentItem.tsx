@@ -56,6 +56,6 @@ const ContentItem: FunctionComponent<{ ing: TIngredientContent, index: number }>
             />
         </article>
     )
-}
+};
 
 export default ContentItem;

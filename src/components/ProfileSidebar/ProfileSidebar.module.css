@@ -1,16 +1,18 @@
 
-.menu{
+.menu {
     padding: 0;
     margin: 0;
 }
-.menuItem{
+
+.menuItem {
     width: 320px;
     height: 64px;
     display: flex;
     align-items: center;
     text-decoration: none;
 }
-.link{
+
+.link {
     text-decoration: none;
 
 }

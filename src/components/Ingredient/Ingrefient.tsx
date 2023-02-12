@@ -32,6 +32,6 @@ const Ingredient: FC = () => {
             </div>
         </article>
     )
-}
+};
 
 export default Ingredient

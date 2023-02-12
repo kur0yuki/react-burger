@@ -15,19 +15,19 @@ export const store = configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
     middleware: [thunkMiddleware, createMiddleware('wss://norma.nomoreparties.space/orders/all', wsActions, false), createMiddleware('wss://norma.nomoreparties.space/orders?token=', wsActionsUser, true, refreshToken)]
-})
+});
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  //<React.StrictMode>
-      <Provider store={store}>
+    //<React.StrictMode>
+    <Provider store={store}>
 
-             <CustomRouter/>
-      </Provider>
-  //</React.StrictMode>
+        <CustomRouter/>
+    </Provider>
+    //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

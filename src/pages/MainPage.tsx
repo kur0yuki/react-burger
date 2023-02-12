@@ -8,15 +8,14 @@ import {useHistory} from "react-router-dom";
 import {useParams} from "react-router";
 import Ingredient from "../components/Ingredient/Ingrefient";
 import {SET_CURRENT_INGREDIENT} from "../services/constants";
-import {TSetModal} from "../utils/types";
+import {TOpenModal, TSetModal} from "../utils/types";
 import {useDispatch, useSelector} from "../services/hooks";
 
 const MainPage: FC<{ setModal: TSetModal }> = ({setModal}) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const id = useParams<{ id: string }>()?.id;
+    const id = useParams<{ id: string }>().id;
     const {data, isLoaded, hasError} = useSelector(store => (store.ingredients));
-
     useEffect(() => {
         if (id && isLoaded) {
             dispatch({type: SET_CURRENT_INGREDIENT, payload: data.find(ing => ing._id === id)});
@@ -28,7 +27,7 @@ const MainPage: FC<{ setModal: TSetModal }> = ({setModal}) => {
         }
     }, [data, id]);
 
-    function openModal() {
+    const openModal:TOpenModal = (content, title, id) => {
         history.push({pathname: '/ingredients/' + id, state: {from: "/", background: true}});
     }
 

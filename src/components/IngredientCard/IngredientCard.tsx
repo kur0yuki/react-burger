@@ -7,27 +7,27 @@ import Ingredient from "../Ingredient/Ingrefient";
 import {useDrag} from "react-dnd";
 import {useDispatch} from "react-redux";
 import {SET_CURRENT_INGREDIENT} from "../../services/constants";
-import {TIngredientData} from "../../utils/types";
+import {TIngredientData, TOpenModal} from "../../utils/types";
 
-const IngredientCard: FC<{ ing: TIngredientData, openModal: (content: ReactNode, title: string, id: string)=>void }> = (props) => {
-    const dispatch = useDispatch()
-    const [{opacity},dragRef] = useDrag({
+const IngredientCard: FC<{ ing: TIngredientData, openModal: TOpenModal }> = (props) => {
+    const dispatch = useDispatch();
+    const [{opacity}, dragRef] = useDrag({
         type: props.ing.type,
         item: props.ing,
-        collect: monitor => ({opacity: monitor.isDragging()?0.5:1})
-    })
+        collect: monitor => ({opacity: monitor.isDragging() ? 0.5 : 1})
+    });
 
     return (
         <article className={`${styles.article} mb-8 mr-4 ml-4`} draggable
                  style={{opacity}}
                  onClick={() => {
-                     dispatch({type: SET_CURRENT_INGREDIENT, payload: props.ing})
+                     dispatch({type: SET_CURRENT_INGREDIENT, payload: props.ing});
                      props.openModal(
-                         <Ingredient />,
+                         <Ingredient/>,
                          'Детали ингредиента',
                          props.ing._id)
                  }}
-                 ref = {dragRef}
+                 ref={dragRef}
         >
             <img src={props.ing.image} alt={props.ing.name}/>
             <div className={appStyles.price}>
@@ -35,11 +35,11 @@ const IngredientCard: FC<{ ing: TIngredientData, openModal: (content: ReactNode,
                 <CurrencyIcon type="primary"/>
             </div>
             <p className="text text_type_main-default name">{props.ing.name}</p>
-            {props.ing.q>0 && <Counter count={props.ing.q} size="default"/>}
+            {props.ing.q > 0 && <Counter count={props.ing.q} size="default"/>}
         </article>
     )
 
-}
+};
 
 IngredientCard.propTypes = {
     openModal: PropTypes.func.isRequired

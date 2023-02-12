@@ -17,17 +17,17 @@ export type TOrderDetail = {
     } | null
 }
 const OrderDetails: FC<TOrderDetail> = ({order, info}) => {
-    if (!info) return null; //TODO check
+    if (!info) return null;
     const array = Object.values(info.dict);
     //console.log(array);
 
-    const Element: FC<{el: TIngredientData&{cnt: number}}> = ({el}) => (
+    const Element: FC<{ el: TIngredientData & { cnt: number } }> = ({el}) => (
         <article className={`${styles.centeredRow} ${styles.spacedRow} mr-2`}>
-            <div className={'text text_type_main-default '+styles.centeredRow}>
-                <img src={el.image_mobile} className={styles.image+' mr-4'} />
+            <div className={'text text_type_main-default ' + styles.centeredRow}>
+                <img src={el.image_mobile} className={styles.image + ' mr-4'}/>
                 {el.name}
             </div>
-            <div className={'text text_type_digits-default '+styles.centeredRow}>
+            <div className={'text text_type_digits-default ' + styles.centeredRow}>
                 {el.cnt} x {el.price}&nbsp;<CurrencyIcon type={"primary"}/>
             </div>
         </article>);
@@ -38,7 +38,7 @@ const OrderDetails: FC<TOrderDetail> = ({order, info}) => {
             <p className={'text mb-15 text_type_main-default'}>{order.status}</p>
             <p className={'text mb-6 text_type_main-medium'}>Состав:</p>
             <ScrollableList array={array} Element={Element} maxHeight={312}/> /*TODO check*/
-            <div className={styles.centeredRow +' pt-10 '+styles.spacedRow}>
+            <div className={styles.centeredRow + ' pt-10 ' + styles.spacedRow}>
                 <p className={'text text_type_main-default text_color_inactive'}>
                     <FormattedDate date={new Date(order.updatedAt)}/>
                 </p>
