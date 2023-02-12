@@ -1,23 +1,24 @@
-.OrderDetails{
+.OrderDetails {
     width: 640px;
     z-index: 100;
     margin: 0 auto;
 }
 
-.textCentered{
+.textCentered {
     text-align: center;
 }
 
-.spacedRow{
+.spacedRow {
     justify-content: space-between;
 }
 
-.centeredRow{
+.centeredRow {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.image{
+
+.image {
     border-radius: 100%;
     border: #4C4CFF solid 1px;
     width: 56px;

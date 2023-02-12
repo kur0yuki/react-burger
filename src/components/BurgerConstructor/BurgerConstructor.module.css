@@ -22,8 +22,9 @@
     align-items: center;
     gap: 4px;
 }
-.container{
-  display: flex;
+
+.container {
+    display: flex;
     gap: 8px;
     flex-direction: column;
 

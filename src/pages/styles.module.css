@@ -2,7 +2,8 @@
     margin: 0 auto;
     max-width: 1280px;
 }
-.centeredText{
+
+.centeredText {
     text-align: center;
 }
 
@@ -62,6 +63,7 @@
     justify-content: space-between;
     gap: 36px
 }
+
 .column {
     flex: 1
 }
